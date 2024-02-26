@@ -37,3 +37,13 @@ hr {
   border-bottom: 1px solid rgba(var(--background-end-rgb), 0.1);
   width: 100%;
 }
+
+a {
+  color: #72cbff;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #5a9dc4;
+}
