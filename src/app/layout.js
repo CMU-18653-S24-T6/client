@@ -7,7 +7,7 @@ import theme from './theme'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-    title: 'EventPeak',
+    title: 'ZenTicket',
     description: 'Get the best events in your city',
     favicon: '/favicon.ico',
 }
