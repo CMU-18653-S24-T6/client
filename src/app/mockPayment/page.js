@@ -11,7 +11,15 @@ export default function Page() {
     const ticket_id = searchParams.get('ticket_id')
     const price = searchParams.get('price')
 
-    // const
+    orderRequester.defaults.headers.common['Authorization'] = localStorage.getItem('token')
+
+    const confirmPay = async () => {
+        const res = await orderRequester.patch(`orders/${order_id}`, { action: 'confirm' })
+        if (res.status == 200) {
+            alert('Payment success!')
+        }
+        window.location.href = '/order'
+    }
 
     console.log(searchParams)
     return (
@@ -24,7 +32,7 @@ export default function Page() {
             <p>Ticket ID: {ticket_id}</p>
             <p>Price: ${price}</p>
             <div className="my-2" />
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onClick={confirmPay}>
                 Pay Now
             </Button>
         </div>

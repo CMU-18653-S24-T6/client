@@ -14,7 +14,14 @@ export default async function EventPage({ params }) {
     const { id } = params // event id
     const events = await eventRequester.get(`/events`)
     const event = events.data.find(event => event.id === id)
-    const stockData = (await orderRequester.get(`/events/${id}`)).data
+    let stockData
+    try {
+        const stock = await orderRequester.get(`/events/${id}`)
+        stockData = stock.data
+    } catch (e) {
+        console.error(e)
+        stockData = { ticketGroups: [] }
+    }
 
     return (
         <div className="page flex justify-between">
