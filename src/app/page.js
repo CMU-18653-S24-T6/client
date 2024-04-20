@@ -29,6 +29,9 @@ export default function Home() {
                             in your city.
                         </p>
                     )}
+                    <p>
+                        Proceed to <Link href={'/event'}>Events</Link>
+                    </p>
                 </div>
             </div>
         </main>
