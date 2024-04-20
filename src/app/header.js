@@ -24,7 +24,7 @@ export default function Header() {
                         <Link href="/event">Events</Link>
                     )}
                 </span>
-                <span>{role === 'ADMIN' && <Link href="/event-admin">Manage Orders</Link>}</span>
+                <span>{role === 'ADMIN' && <Link href="/order-admin">Manage Orders</Link>}</span>
             </div>
             <div className="flex gap-8 items-end">
                 {role === 'USER' && (
