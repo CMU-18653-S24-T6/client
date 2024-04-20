@@ -3,10 +3,8 @@ import "./globals.css";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter'
 import { ThemeProvider } from '@mui/material/styles'
 import theme from './theme'
-import Link from 'next/link'
 
-import ChatIcon from '@mui/icons-material/Chat'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import Header from './header'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,20 +20,7 @@ export default function RootLayout({ children }) {
             <AppRouterCacheProvider>
                 <ThemeProvider theme={theme}>
                     <body>
-                        <header className="py-4 px-8 bg-gray-700 flex justify-between">
-                            <div className="flex gap-8">
-                                <span>ZenTicket</span>
-                                <span>
-                                    <Link href="/event">Events</Link>
-                                </span>
-                            </div>
-                            <div className="flex gap-8 items-end">
-                                <Link href="/order">
-                                    <ShoppingCartIcon />
-                                </Link>
-                                <ChatIcon />
-                            </div>
-                        </header>
+                        <Header />
                         {children}
                     </body>
                 </ThemeProvider>

@@ -5,12 +5,16 @@ import Link from 'next/link'
 
 import { logout } from '@/utils/auth'
 
+import { getRole } from '@/utils/auth'
+
 export default function Home() {
     const [decoded, setDecoded] = useState(null)
+    const [role, setRole] = useState(null)
     useEffect(() => {
         const idToken = localStorage.getItem('idToken')
         if (idToken) {
             const decoded = jose.decodeJwt(idToken)
+            setRole(getRole())
             setDecoded(decoded)
         }
     }, [])
@@ -21,7 +25,8 @@ export default function Home() {
                     <h1 className="text-4xl font-bold">Welcome to ZenTicket</h1>
                     {decoded ? (
                         <p>
-                            You are logged in as <strong>{decoded.email}</strong>. <a onClick={logout}>Log out</a>
+                            You are logged in as <strong>{decoded.email}</strong> as <strong>{role}</strong>.{' '}
+                            <a onClick={logout}>Log out</a>
                         </p>
                     ) : (
                         <p>
