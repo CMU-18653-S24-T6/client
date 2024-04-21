@@ -25,11 +25,9 @@ export default async function EventPage() {
                             <h2 className="mb-1">{event.eventName}</h2>
                             <p>{moment(event.eventStartTime).format('MMM DD, YYYY hh:mm')}</p>
                             <p className="text-gray-300 font-light">{event.description}</p>
-                            <Link href={`/event/${event.id}`}>
-                                <Button variant="contained" color="primary">
-                                    Buy Tickets
-                                </Button>
-                            </Link>
+                            <Button variant="outlined" color="error">
+                                Delete Event
+                            </Button>
                         </div>
                         <div>
                             <img
