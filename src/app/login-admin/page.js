@@ -91,7 +91,6 @@ export default function Home() {
                         </div>
                     </div>
                     {page === 'login' && <LogInOrSignUp setPage={setPage} />}
-                    {page === 'verify' && <Verify setPage={setPage} />}
                 </div>
             </main>
         </>
