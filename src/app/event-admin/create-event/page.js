@@ -29,12 +29,12 @@ export default function Page() {
                 },
             })
         }
-        // if (!res.data) {
-        //     alert('Image upload failed')
-        //     return
-        // } else {
-        //     console.log(res.data)
-        // }
+        if (!res?.data) {
+            alert('Image upload failed')
+            return
+        } else {
+            console.log(res.data.id)
+        }
         // submit event
         const formData = {
             eventName: document.getElementById('event-name').value,
@@ -48,7 +48,7 @@ export default function Page() {
                     stock: parseInt(document.getElementById(`ticket-group-stock-${i}`).value),
                 }
             }),
-            imageUri: res.data,
+            imageUri: res.data.id,
         }
         eventRequester.defaults.headers.common['Authorization'] = localStorage.getItem('token')
         res = await eventRequester.post('/', formData)
