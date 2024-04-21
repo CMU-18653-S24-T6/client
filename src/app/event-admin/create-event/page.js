@@ -47,6 +47,7 @@ export default function Page() {
         eventRequester.defaults.headers.common['Authorization'] = localStorage.getItem('token')
         res = await eventRequester.post('/', formData)
         console.log(res)
+        window.location.href = '/event-admin'
     }
 
     return (
