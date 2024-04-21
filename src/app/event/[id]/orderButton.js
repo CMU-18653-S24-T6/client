@@ -6,6 +6,8 @@ import Modal from '@mui/material/Modal'
 
 import { orderRequester } from '@/utils/requester'
 
+export const revalidate = 15
+
 export default function OrderButton({ data, eventData }) {
     const [checkOutStep, setCheckOutStep] = useState(0)
     const [stock, setStock] = useState('pending')

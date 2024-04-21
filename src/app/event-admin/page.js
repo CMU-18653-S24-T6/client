@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import Button from '@mui/material/Button'
 import Link from 'next/link'
@@ -5,8 +7,13 @@ import Link from 'next/link'
 import { eventRequester } from '@/utils/requester'
 import moment from 'moment'
 
+export const revalidate = 15
+
 export default async function EventPage() {
     const events = await eventRequester.get('/')
+    const deleteEvent = async id => {
+        await eventRequester.delete(`/events/${id}`)
+    }
     return (
         <div className="page">
             <div className="flex justify-between align-middle items-center">
@@ -25,7 +32,13 @@ export default async function EventPage() {
                             <h2 className="mb-1">{event.eventName}</h2>
                             <p>{moment(event.eventStartTime).format('MMM DD, YYYY hh:mm')}</p>
                             <p className="text-gray-300 font-light">{event.description}</p>
-                            <Button variant="outlined" color="error">
+                            <Button
+                                variant="outlined"
+                                color="error"
+                                onClick={() => {
+                                    deleteEvent(event.id)
+                                }}
+                            >
                                 Delete Event
                             </Button>
                         </div>
