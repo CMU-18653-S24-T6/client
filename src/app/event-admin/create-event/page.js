@@ -29,6 +29,12 @@ export default function Page() {
                 },
             })
         }
+        // if (!res.data) {
+        //     alert('Image upload failed')
+        //     return
+        // } else {
+        //     console.log(res.data)
+        // }
         // submit event
         const formData = {
             eventName: document.getElementById('event-name').value,
