@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Form, Input, Button, Row, Col  } from 'antd';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {SendOutlined} from "@ant-design/icons";
-import axios from "axios";
+import {reviewRequester} from "@/utils/requester";
+
 const CommentForm = ({ msg, topicId, closeModel, addComment}) => {
     const [comment, setComment] = useState('');
 
@@ -13,7 +14,7 @@ const CommentForm = ({ msg, topicId, closeModel, addComment}) => {
             parentId: msg.rid,
             date: Date.now()
         }
-        axios.post(`http://localhost:8080/reviews/${topicId}`, postData)
+        reviewRequester.post(`/reviews/${topicId}`, postData)
             .then((response) => {
                 addComment({...postData,rid:response.data.data});
             });

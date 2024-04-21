@@ -4,7 +4,8 @@ import CommentList from "./CommentList";
 import {Button, Drawer} from "antd";
 import {CommentOutlined} from "@ant-design/icons";
 import CommentForm from "./CommentForm";
-import axios from "axios";
+import { reviewRequester} from "@/utils/requester";
+
 function Review({topicId}) {
     const [comments, setComments] = useState([]);
     //set what comment need to reply
@@ -19,7 +20,7 @@ function Review({topicId}) {
             return;
         }
         setLoading(true);
-        axios.get(`http://localhost:8080/reviews/${topicId}?page=${page}`)
+        reviewRequester.get(`/reviews/${topicId}?page=${page}`)
             .then(res => {
                 const newData = res.data.data.reviews;
                 setComments([...comments,...newData]);

@@ -1,7 +1,7 @@
 import React from "react";
 import {Button, Modal} from "antd";
-import axios from "axios";
 import {DeleteOutlined, ExclamationCircleOutlined, UndoOutlined} from "@ant-design/icons";
+import {reviewRequester} from "@/utils/requester";
 function CommentMemento({cmid,commentid, uid, content, date,currentComment,setComments,addMemento,deleteMemento}) {
     const dateFormat = new Date(date);
     const standardDate = `${dateFormat.getFullYear()}-${dateFormat.getMonth() + 1}-${dateFormat.getDate()} ${dateFormat.getHours()}:${dateFormat.getMinutes()}`;
@@ -11,7 +11,7 @@ function CommentMemento({cmid,commentid, uid, content, date,currentComment,setCo
             historyId: cmid,
             rid: commentid
         };
-        axios.put(`http://localhost:8080/reviews/histories/undo`,putData)
+        reviewRequester.put(`/reviews/histories/undo`,putData)
             .then((response) => {
                 setComments({...currentComment,content,updatedtime:putData.updateTime});
                 deleteMemento(cmid);
@@ -20,7 +20,7 @@ function CommentMemento({cmid,commentid, uid, content, date,currentComment,setCo
     }
 
     const deleteComment2 = () => {
-        axios.delete(`http://localhost:8080/reviews/histories/undo/${cmid}`)
+        reviewRequester.delete(`/reviews/histories/undo/${cmid}`)
             .then((response) => {
                 console.log(response);
             });

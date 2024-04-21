@@ -1,9 +1,9 @@
 'use client'
 import React, {useEffect, useState} from "react";
-import axios from "axios";
 import {List, Typography} from "antd";
 import "../css/App.css";
 import { useRouter } from 'next/Navigation';
+import {reviewRequester} from "@/utils/requester";
 export function SmallReplyList({rid,topicId}){
     const [replies, setReplies] = useState([{}]);
     const [total, setTotal] = useState(0);
@@ -12,7 +12,7 @@ export function SmallReplyList({rid,topicId}){
         navigate.push(`/review/${topicId}/${rid}`);
     }
     useEffect(() => {
-        axios.get(`http://localhost:8080/reviews/replies/${rid}?page=0`)
+        reviewRequester.get(`/reviews/replies/${rid}?page=0`)
             .then((response) => {
                 setReplies(response.data.data.reviews);
                 setTotal(response.data.data.total);
@@ -34,7 +34,6 @@ export function SmallReplyList({rid,topicId}){
             grid={{ gutter: 16, column: 1 }}
             dataSource={itemsToShow}
             renderItem={item => {
-                // 检查是否是总回复数的特殊项
                 if (item.isTotal) {
                     return (
                         <List.Item className="no-border-no-padding">
@@ -44,7 +43,6 @@ export function SmallReplyList({rid,topicId}){
                         </List.Item>
                     );
                 }
-                // 正常回复项
                 return (
                     <List.Item className="no-border-no-padding">
                         <div className="list-container text-wrap text-break">

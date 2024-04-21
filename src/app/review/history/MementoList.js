@@ -1,11 +1,11 @@
 'use client'
 import {Card, List} from "antd";
 import React, {useEffect, useState} from "react";
-import axios from "axios";
 import CommentMemento from "./CommentMemento";
 import { useRouter } from 'next/Navigation';
 import {BackButton} from "../BackButton";
 import CurrentComment from "./CurrentComment";
+import {reviewRequester} from "@/utils/requester";
 
 function MementoList({topicId,rid}) {
     const [mementos, setMementos] = useState([]);
@@ -19,7 +19,7 @@ function MementoList({topicId,rid}) {
             return;
         }
         setLoading(true);
-        axios.get(`http://localhost:8080/reviews/histories/${rid}?page=${page}`)
+        reviewRequester.get(`/reviews/histories/${rid}?page=${page}`)
             .then(res => {
                 const newData = res.data.data.reviews;
                 setMementos([...mementos,...newData]);
@@ -32,7 +32,7 @@ function MementoList({topicId,rid}) {
             });
     };
     useEffect(() => {
-        axios.get(`http://localhost:8080/reviews/${topicId}/${rid}`)
+        reviewRequester.get(`/reviews/${topicId}/${rid}`)
             .then((response) => {
                 setComments(response.data.data);
             }).catch((error) => {

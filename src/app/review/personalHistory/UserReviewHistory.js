@@ -1,8 +1,8 @@
 'use client'
 import React, {useEffect, useState} from "react";
 import CommentList from "../CommentList";
-import axios from "axios";
 import {BackButton} from "../BackButton";
+import {reviewRequester} from "@/utils/requester";
 function UserReviewHistory({uid}) {
     const [comments, setComments] = useState([]);
     const [message, setMessage] = useState({placeHolder: "Comment"});
@@ -14,7 +14,7 @@ function UserReviewHistory({uid}) {
             return;
         }
         setLoading(true);
-        axios.get(`http://localhost:8080/reviews/uids/${uid}?page=${page}`)
+        reviewRequester.get(`/reviews/uids/${uid}?page=${page}`)
             .then(res => {
                 console.log(res.data.data.reviews)
                 const newData = res.data.data.reviews;

@@ -8,7 +8,7 @@ import {
     ExclamationCircleOutlined
 } from '@ant-design/icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from "axios";
+import {reviewRequester} from "@/utils/requester";
 function CurrentComment({ topidId,rid, uid, content, date,updatedtime,deleteComment,addMemento}) {
     const [contents, setContents] = useState(content);
     const [updatedTime, setUpdatedTime] = useState(updatedtime);
@@ -37,7 +37,7 @@ function CurrentComment({ topidId,rid, uid, content, date,updatedtime,deleteComm
             date: updated
         }
         console.log(postData)
-        axios.put(`http://localhost:8080/reviews/${topidId}/${rid}`, postData)
+        reviewRequester.put(`/reviews/${topidId}/${rid}`, postData)
             .then((response) => {
                 console.log(response);
             });
@@ -52,7 +52,7 @@ function CurrentComment({ topidId,rid, uid, content, date,updatedtime,deleteComm
     }
 
     const deleteComment2 = () => {
-        axios.delete(`http://localhost:8080/reviews/${topidId}/${rid}`)
+        reviewRequester.delete(`/reviews/${topidId}/${rid}`)
             .then((response) => {
                 console.log(response);
             });

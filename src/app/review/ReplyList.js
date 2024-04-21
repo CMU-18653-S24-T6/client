@@ -2,12 +2,12 @@
 import CommentList from "./CommentList";
 import Comment from "./Comment";
 import React, {useEffect, useState} from "react";
-import axios from "axios";
 import {Button, Card, Divider, Drawer} from 'antd';
 import { useRouter } from 'next/Navigation';
 import {BackButton} from "./BackButton";
 import CommentForm from "./CommentForm";
 import {CommentOutlined} from "@ant-design/icons";
+import { reviewRequester } from "@/utils/requester";
 
 function ReplyList({rid, topicId}) {
     const [replies, setReplies] = useState([]);
@@ -23,7 +23,7 @@ function ReplyList({rid, topicId}) {
             return;
         }
         setLoading(true);
-        axios.get(`http://localhost:8080/reviews/replies/${rid}?page=${page}`)
+        reviewRequester.get(`reviews/replies/${rid}?page=${page}`)
             .then(res => {
                 const newData = res.data.data.reviews;
                 console.log(newData);
@@ -37,7 +37,7 @@ function ReplyList({rid, topicId}) {
             });
     };
     useEffect(() => {
-        axios.get(`http://localhost:8080/reviews/${topicId}/${rid}`)
+        reviewRequester.get(`/reviews/${topicId}/${rid}`)
             .then((response) => {
                 console.log("the main comment is "+response.data)
                 setComments(response.data.data);

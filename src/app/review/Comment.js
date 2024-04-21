@@ -10,10 +10,9 @@ import {
     HistoryOutlined
 } from '@ant-design/icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from "axios";
 import { useRouter } from 'next/navigation';
 import {SmallReplyList} from "./SmallReplyList/SmallReplyList";
-import Link from 'next/link'
+import {reviewRequester} from "@/utils/requester";
 const Comment = ({ topicId,rid, uid, content, date, updatedtime,deleteComment,showReply}) => {
     const [contents, setContents] = useState(content);
     const [updatedTime, setUpdatedTime] = useState(updatedtime);
@@ -52,7 +51,7 @@ const Comment = ({ topicId,rid, uid, content, date, updatedtime,deleteComment,sh
             content: contents,
             date: updated
         }
-        axios.put(`http://localhost:8080/reviews/${topicId}/${rid}`, postData)
+        reviewRequester.put(`/reviews/${topicId}/${rid}`, postData)
             .then((response) => {
             });
         setEditing(!isEditing);
@@ -60,7 +59,7 @@ const Comment = ({ topicId,rid, uid, content, date, updatedtime,deleteComment,sh
     }
 
     const deleteComment2 = () => {
-        axios.delete(`http://localhost:8080/reviews/${topicId}/${rid}`)
+        reviewRequester.delete(`/reviews/${topicId}/${rid}`)
             .then((response) => {
             });
     }
