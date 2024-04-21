@@ -70,7 +70,7 @@ export default async function EventPage({ params }) {
             </div>
             <div>
                 <img
-                    src={NEXT_PUBLIC_EVENT_IMG_PREFIX + event.imageUri}
+                    src={process.NEXT_PUBLIC_EVENT_IMG_PREFIX + event.imageUri}
                     alt={event.eventName}
                     height="300"
                     width="400"
