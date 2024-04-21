@@ -2,23 +2,19 @@
 import React, {useEffect, useState} from "react";
 import CommentList from "../CommentList";
 import axios from "axios";
-import {useParams} from "react-router-dom";
 import {BackButton} from "../BackButton";
-function UserReviewHistory() {
+function UserReviewHistory({uid}) {
     const [comments, setComments] = useState([]);
-    //set what comment need to reply
-    const { uid }  = useParams();
     const [message, setMessage] = useState({placeHolder: "Comment"});
     const [loading, setLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const [page, setPage] = useState(1);
-    const URL = process.env.HOSTNAME;
     const fetchMoreData = () => {
         if (loading) {
             return;
         }
         setLoading(true);
-        axios.get(`http://${URL}/reviews/uids/${uid}?page=${page}`)
+        axios.get(`http://localhost:8080/reviews/uids/${uid}?page=${page}`)
             .then(res => {
                 console.log(res.data.data.reviews)
                 const newData = res.data.data.reviews;
