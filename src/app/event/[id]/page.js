@@ -10,6 +10,10 @@ import TableRow from '@mui/material/TableRow'
 
 import OrderButton from './orderButton'
 
+
+export const revalidate = 15
+export const dynamic = 'force-dynamic'
+
 export default async function EventPage({ params }) {
     const { id } = params // event id
     const events = await eventRequester.get(`/`)
@@ -70,7 +74,7 @@ export default async function EventPage({ params }) {
             </div>
             <div>
                 <img
-                    src={process.NEXT_PUBLIC_EVENT_IMG_PREFIX + event.imageUri}
+                    src={process.env.NEXT_PUBLIC_EVENT_IMG_PREFIX + event.imageUri}
                     alt={event.eventName}
                     height="300"
                     width="400"

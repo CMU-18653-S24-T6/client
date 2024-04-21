@@ -5,6 +5,9 @@ import Link from 'next/link'
 import { eventRequester } from '@/utils/requester'
 import moment from 'moment'
 
+export const revalidate = 15
+export const dynamic = 'force-dynamic'
+
 export default async function EventPage() {
     const events = await eventRequester.get('/')
     return (

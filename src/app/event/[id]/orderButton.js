@@ -7,6 +7,7 @@ import Modal from '@mui/material/Modal'
 import { orderRequester } from '@/utils/requester'
 
 export const revalidate = 15
+export const dynamic = 'force-dynamic'
 
 export default function OrderButton({ data, eventData }) {
     const [checkOutStep, setCheckOutStep] = useState(0)
