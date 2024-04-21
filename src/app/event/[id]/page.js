@@ -69,7 +69,12 @@ export default async function EventPage({ params }) {
                 </div>
             </div>
             <div>
-                <img src={event.imageUri} alt={event.eventName} height="300" width="400" />
+                <img
+                    src={process.env.NEXT_PUBLIC_BACKEND_EVENT_ROOT + '/events/images/' + event.imageUri}
+                    alt={event.eventName}
+                    height="300"
+                    width="400"
+                />
             </div>
         </div>
     )

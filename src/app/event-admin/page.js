@@ -9,10 +9,14 @@ export default async function EventPage() {
     const events = await eventRequester.get('/events')
     return (
         <div className="page">
-            <h1>Welcome to ZenTicket</h1>
+            <div className="flex justify-between align-middle items-center">
+                <h1>Manage Events</h1>
+                <Link href="/event-admin/create-event">
+                    <Button>+ Create Event</Button>
+                </Link>
+            </div>
             <p className="text-gray-100">
-                At Zenticket, we offer you with the best performance, events, and shows with competitive prices. Please
-                find the list of recent events below.
+                Below is the list of events that are currently available. Please find the event details below.
             </p>
             <ul className="flex flex-col gap-3">
                 {events.data.map(event => (
