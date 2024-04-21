@@ -23,7 +23,7 @@ export default function Page() {
             const formData = new FormData()
             formData.append('file', file)
             eventRequester.defaults.headers.common['Authorization'] = localStorage.getItem('token')
-            res = await eventRequester.post('/events/image', formData, {
+            res = await eventRequester.post('/image', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -45,7 +45,7 @@ export default function Page() {
             imageUri: res.data,
         }
         eventRequester.defaults.headers.common['Authorization'] = localStorage.getItem('token')
-        res = await eventRequester.post('/events', formData)
+        res = await eventRequester.post('/', formData)
         console.log(res)
     }
 

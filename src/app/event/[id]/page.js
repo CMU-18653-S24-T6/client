@@ -12,7 +12,7 @@ import OrderButton from './orderButton'
 
 export default async function EventPage({ params }) {
     const { id } = params // event id
-    const events = await eventRequester.get(`/events`)
+    const events = await eventRequester.get(`/`)
     const event = events.data.find(event => event.id === id)
     let stockData
     try {

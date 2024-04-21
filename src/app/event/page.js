@@ -6,7 +6,7 @@ import { eventRequester } from '@/utils/requester'
 import moment from 'moment'
 
 export default async function EventPage() {
-    const events = await eventRequester.get('/events')
+    const events = await eventRequester.get('/')
     return (
         <div className="page">
             <h1>Welcome to ZenTicket</h1>
