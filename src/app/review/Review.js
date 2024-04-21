@@ -55,7 +55,8 @@ function Review({topicId}) {
     }
 
     return (
-        <div className="App">
+        <div style={{width: "100%",textAlign: "center"}}>
+            <h1 className="flex-grow-1 text-center mb-0">UserReview</h1>
             <CommentList comments={comments} show={showModalWithMsg}
                          setMessage={setMessage} deleteComment={deleteComment}
                          showReply={true} fetchMoreData={fetchMoreData} hasMore={hasMore}
