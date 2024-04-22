@@ -33,6 +33,11 @@ export default function Header() {
                     </Link>
                 )}
                 {role && <ChatIcon />}
+                {role === 'USER' && (
+                    <Link href="/profile">
+                        Profile
+                    </Link>
+                )}
                 {!role && <Link href="/login">Log In</Link>}
             </div>
         </header>
