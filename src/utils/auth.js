@@ -20,12 +20,3 @@ export const getRole = () => {
     }
     return null
 }
-
-export const getUid = () => {
-    const token = localStorage.getItem('token')
-    if (token) {
-        const decoded = jose.decodeJwt(token)
-        return decoded.sub;
-    }
-    return null
-}

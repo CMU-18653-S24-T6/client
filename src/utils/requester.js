@@ -21,18 +21,4 @@ const reviewRequester = axios.create({
     },
 })
 
-const profileRequester = axios.create({
-     baseURL: "http://localhost:8080",
-     headers: {
-         'Content-Type': 'application/json',
-     },
-})
-
-const chatRequester = axios.create({
-     baseURL: "http://localhost:8081/api/chat",
-     headers: {
-         'Content-Type': 'application/json',
-     },
-})
-
-export { eventRequester, orderRequester, reviewRequester, profileRequester, chatRequester}
+export { eventRequester, orderRequester, reviewRequester}
