@@ -14,6 +14,8 @@ const EditProfile = ({ data, onSubmit }) => {
         address: data?.address || '',
         age: data?.age || '',
         tel: data?.tel || '',
+        email: data?.email || '',
+        dob: data?.dob || '',
     });
 
     const handleChange = (e) => {
@@ -70,7 +72,7 @@ const EditProfile = ({ data, onSubmit }) => {
                 <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm="4">Tel:</Form.Label>
                     <Col sm="8">
-                        <Form.Control name="Phone" type='text' placeholder='000-000-0000' onChange={handleChange} value={formData.tel}></Form.Control>
+                        <Form.Control name="tel" type='text' placeholder='000-000-0000' onChange={handleChange} value={formData.tel}></Form.Control>
                     </Col>
                 </Form.Group>
                 <Button variant="primary" type="submit">
