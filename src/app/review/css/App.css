@@ -1,0 +1,18 @@
+.no-border-no-padding {
+    border: none !important;
+    padding: 0 !important;
+    margin-bottom: 0 !important; /* 移除每个元素之间的间隔 */
+    border-bottom: none !important; /* 确保没有底部边框 */
+}
+
+.list-container, .footer-container {
+    background-color: #f8f9fa; /* 轻微灰色背景 */
+    text-align: left;
+    margin: 0; /* 移除外边距 */
+    border: none; /* 移除边框 */
+}
+
+.list-container div {
+    padding: 10px; /* 为每个列表项内容添加适度的内边距 */
+    border-bottom: none !important; /* 移除分界线 */
+}

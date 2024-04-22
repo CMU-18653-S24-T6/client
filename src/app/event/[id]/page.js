@@ -7,8 +7,8 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
-
 import OrderButton from './orderButton'
+import Link from "next/link";
 
 
 export const revalidate = 15
@@ -68,7 +68,11 @@ export default async function EventPage({ params }) {
                                     ))}
                                 </TableBody>
                             </Table>
+                            <Link href={`/review/${id}`}>
+                                Review
+                            </Link>
                         </TableContainer>
+
                     </div>
                 </div>
             </div>

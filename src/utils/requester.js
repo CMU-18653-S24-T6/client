@@ -14,4 +14,11 @@ const orderRequester = axios.create({
     },
 })
 
-export { eventRequester, orderRequester }
+const reviewRequester = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_BACKEND_REVIEW_ROOT,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+})
+
+export { eventRequester, orderRequester, reviewRequester}
