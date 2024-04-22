@@ -3,7 +3,7 @@ import CommentList from "./CommentList";
 import Comment from "./Comment";
 import React, {useEffect, useState} from "react";
 import {Button, Card, Divider, Drawer} from 'antd';
-import { useRouter } from 'next/Navigation';
+import { useRouter } from 'next/navigation'
 import {BackButton} from "./BackButton";
 import CommentForm from "./CommentForm";
 import {CommentOutlined} from "@ant-design/icons";

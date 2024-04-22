@@ -2,7 +2,7 @@
 import {Card, List} from "antd";
 import React, {useEffect, useState} from "react";
 import CommentMemento from "./CommentMemento";
-import { useRouter } from 'next/Navigation';
+import { useRouter } from 'next/navigation'
 import {BackButton} from "../BackButton";
 import CurrentComment from "./CurrentComment";
 import {reviewRequester} from "@/utils/requester";
