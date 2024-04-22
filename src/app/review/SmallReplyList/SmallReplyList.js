@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from "react";
 import {List, Typography} from "antd";
 import "../css/App.css";
-import { useRouter } from 'next/Navigation';
+import { useRouter } from 'next/navigation'
 import {reviewRequester} from "@/utils/requester";
 export function SmallReplyList({rid,topicId}){
     const [replies, setReplies] = useState([{}]);
