@@ -9,7 +9,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import OrderButton from './orderButton'
 import Link from "next/link";
-
+import { Button } from '@mui/material'
 
 export const revalidate = 15
 export const dynamic = 'force-dynamic'
@@ -24,6 +24,10 @@ export default async function EventPage({ params }) {
         stockData = stock.data
     } catch (e) {
         console.error(e)
+        stockData = { ticketGroups: [] }
+    }
+
+    if (!stockData.ticketGroups) {
         stockData = { ticketGroups: [] }
     }
 
@@ -69,7 +73,7 @@ export default async function EventPage({ params }) {
                                 </TableBody>
                             </Table>
                             <Link href={`/review/${id}`}>
-                                Review
+                                <Button>Event Review</Button>
                             </Link>
                         </TableContainer>
 
