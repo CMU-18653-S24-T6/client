@@ -21,4 +21,11 @@ const reviewRequester = axios.create({
     },
 })
 
-export { eventRequester, orderRequester, reviewRequester}
+const profileRequester = axios.create({
+     baseURL: "https://x9krx8dvgk.execute-api.us-west-2.amazonaws.com/default",
+     headers: {
+         'Content-Type': 'application/json',
+     },
+})
+
+export { eventRequester, orderRequester, reviewRequester, profileRequester}
