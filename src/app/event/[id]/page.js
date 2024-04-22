@@ -76,6 +76,7 @@ export default async function EventPage({ params }) {
                                 <Button>Event Review</Button>
                             </Link>
                         </TableContainer>
+
                     </div>
                 </div>
             </div>
