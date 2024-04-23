@@ -32,8 +32,8 @@ export default async function EventPage({ params }) {
     }
 
     return (
-        <div className="page flex justify-between">
-            <div className="flex justify-between">
+        <div className="page flex justify-between gap-8 items-start">
+            <div className="flex justify-between gap-4">
                 <div className="flex flex-col gap-4">
                     <div className="flex flex-col gap-1">
                         <h1>{event.eventName}</h1>
@@ -79,14 +79,7 @@ export default async function EventPage({ params }) {
                     </div>
                 </div>
             </div>
-            <div>
-                <img
-                    src={process.env.NEXT_PUBLIC_EVENT_IMG_PREFIX + event.imageUri}
-                    alt={event.eventName}
-                    height="300"
-                    width="400"
-                />
-            </div>
+            <img src={event.imageUri} alt={event.eventName} width="400" />
         </div>
     )
 }

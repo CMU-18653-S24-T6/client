@@ -4,6 +4,7 @@ import { FormControl, FormLabel, Input, InputLabel, TextField, Button } from '@m
 import { useState } from 'react'
 import { eventRequester } from '@/utils/requester'
 import moment from 'moment'
+import s3Upload from '@/utils/s3Upload'
 
 export default function Page() {
     const [numTG, setNumTG] = useState(1)
@@ -18,23 +19,12 @@ export default function Page() {
 
     const submitForm = async () => {
         // submit image
-        let res
+        let imgUrl
         if (file) {
-            const formData = new FormData()
-            formData.append('file', file)
-            eventRequester.defaults.headers.common['Authorization'] = localStorage.getItem('token')
-            res = await eventRequester.post('/image', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
+            imgUrl = await s3Upload(file)
         }
-        if (!res?.data) {
-            alert('Image upload failed')
-            return
-        } else {
-            console.log(res.data.id)
-        }
+
+        console.log(imgUrl)
         // submit event
         const formData = {
             eventName: document.getElementById('event-name').value,
@@ -48,10 +38,10 @@ export default function Page() {
                     stock: parseInt(document.getElementById(`ticket-group-stock-${i}`).value),
                 }
             }),
-            imageUri: res.data.id,
+            imageUri: imgUrl,
         }
         eventRequester.defaults.headers.common['Authorization'] = localStorage.getItem('token')
-        res = await eventRequester.post('/', formData)
+        const res = await eventRequester.post('/', formData)
         console.log(res)
         window.location.href = '/event-admin'
     }
