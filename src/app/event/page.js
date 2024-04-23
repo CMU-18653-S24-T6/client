@@ -19,7 +19,7 @@ export default async function EventPage() {
             </p>
             <ul className="flex flex-col gap-3">
                 {events.data.map(event => (
-                    <li key={event.id} className="my-8 flex justify-between">
+                    <li key={event.id} className="my-8 flex justify-between gap-8 items-start">
                         <div className="flex flex-col gap-2 items-start">
                             <h2 className="mb-1">{event.eventName}</h2>
                             <p>{moment(event.eventStartTime).format('MMM DD, YYYY hh:mm')}</p>
@@ -30,14 +30,7 @@ export default async function EventPage() {
                                 </Button>
                             </Link>
                         </div>
-                        <div>
-                            <img
-                                src={process.env.NEXT_PUBLIC_EVENT_IMG_PREFIX + event.imageUri}
-                                alt={event.eventName}
-                                height="300"
-                                width="400"
-                            />
-                        </div>
+                        <img src={event.imageUri} alt={event.eventName} width="400" />
                     </li>
                 ))}
             </ul>
