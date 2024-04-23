@@ -33,7 +33,7 @@ function CurrentComment({ topidId,rid, uid, content, date,updatedtime,deleteComm
     useEffect(() => {
         profileRequester.get(`/profile/username/${uid}`)
             .then((response) => {
-                setUserName(response.data.username);
+                setUserName(response.data);
             })
     }, [uid]);
     const edit = () =>{

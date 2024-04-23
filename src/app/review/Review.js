@@ -54,11 +54,11 @@ function Review({topicId}) {
     }
 
     return (
-        <div style={{width: "100%",textAlign: "center",position:'relative'}}>
+        <div style={{width: "100%",position:'relative'}}>
             <CommentList comments={comments} show={showModalWithMsg}
                          setMessage={setMessage} deleteComment={deleteComment}
                          showReply={true} fetchMoreData={fetchMoreData} hasMore={hasMore}
-                         onLoading={loading}
+                         onLoading={loading} height={'500px'}
             />
             <div style={{position: 'absolute', bottom: 0, width: '100%', textAlign: 'center', paddingBottom: '0px'}}>
                 <Button icon={<CommentOutlined/>} style={{width:"100%",boxSizing:'border-box'}}
@@ -74,7 +74,7 @@ function Review({topicId}) {
                     getContainer=".parent-container"
                     style={{ position:'absolute',bottom:0}}
                     >
-               <CommentForm msg={message} topicId={topicId} closeModel={closeModal} addComment={addComment}/>
+            <CommentForm msg={message} topicId={topicId} closeModel={closeModal} addComment={addComment}/>
             </Drawer>})
         </div>
     );

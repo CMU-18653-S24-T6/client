@@ -7,14 +7,11 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import OrderButton from './orderButton'
-import {Tabs} from "antd"
 export const revalidate = 15
 export const dynamic = 'force-dynamic'
-import ReviewWrapper from "@/app/review/ReviewWrapper";
 
 
-export default async function EventPage({ params }) {
-    const { id } = params // event id
+export default async function EventDescription({ id }) {
     const events = await eventRequester.get(`/`)
     const event = events.data.find(event => event.id === id)
     let stockData
@@ -29,13 +26,6 @@ export default async function EventPage({ params }) {
     if (!stockData.ticketGroups) {
         stockData = { ticketGroups: [] }
     }
-    const items = [
-        {
-            key: '1',
-            label: 'Review',
-            children: <ReviewWrapper topicId={id} />
-        }
-    ]
 
     return (
         <div className="page flex justify-between">
@@ -79,10 +69,6 @@ export default async function EventPage({ params }) {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <Tabs
-                            defaultActiveKey="1"
-                            items={items}
-                        />
                     </div>
                 </div>
             </div>
@@ -97,3 +83,5 @@ export default async function EventPage({ params }) {
         </div>
     )
 }
+
+

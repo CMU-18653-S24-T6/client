@@ -76,7 +76,7 @@ function ReplyList({rid, topicId}) {
                 <h1 className="flex-grow-1 text-center mb-0">ReplyList</h1>
                 <div style={{width: "80px"}}></div>
             </div>
-            <div>
+            <div style={{position: 'relative',width: "100%"}}>
                 <Card style={{ width: '100%', height: 130 ,backgroundColor:'#f5f5f5'}}>
                     <Comment {...comments} show={showModalWithMsg} deleteComment={deleteComment}
                              style={{width: '100%'}} showReply={false}/>
@@ -84,9 +84,9 @@ function ReplyList({rid, topicId}) {
                 <Divider style={{borderWidth: 5, borderColor: '#e8e8e8'}}/>
                 <div>
                 <CommentList comments={replies} deleteComment={deleteReply} showReply={true} fetchMoreData={fetchMoreData} hasMore={hasMore}
-                             onLoading={loading}/>
+                             onLoading={loading} height={'370px'}/>
                 </div>
-                <div style={{position: 'fixed', bottom: 0, width: '100%', textAlign: 'center', paddingBottom: '0px'}}>
+                <div style={{position: 'absolute', bottom: 0, width: '100%', textAlign: 'center', paddingBottom: '0px'}}>
                     <Button icon={<CommentOutlined/>} style={{width: '100%'}}
                             onClick={() => setIsModalVisible(true)}>Reply</Button>
                 </div>
