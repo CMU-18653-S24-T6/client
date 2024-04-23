@@ -12,3 +12,7 @@
 body {
     color: #000000;
 }
+
+.custom-button {
+    width: fit-content;
+}
