@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function PersonalProfile({data, onEdit}) {
+    let uid = '';
     if (data === null) {
         return (
             <Container>
@@ -12,7 +13,9 @@ export default function PersonalProfile({data, onEdit}) {
             </Container>
         );
     }
-
+    if ('uid' in data) {
+      uid = data.uid;
+    } 
     return (
     <section className="vh-100" style={{ backgroundColor: '#f4f5f7', color: '#000000' }}>
       <MDBContainer className="py-5 h-100">
@@ -25,6 +28,11 @@ export default function PersonalProfile({data, onEdit}) {
                   <MDBCardImage src={data?.avatar || "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"}
                                 alt="Avatar" className="my-5" style={{ width: '80px' }} fluid />
                   <MDBTypography tag="h5">{data.firstName + ' ' + data.lastName}</MDBTypography>
+                  <Button variant="info" size="sm" className="mt-3 custom-button">
+                        <Link href={`/review/history/${uid}`} style={{ color: 'white' }}>
+                            Reviews
+                        </Link>
+                    </Button>
                   <MDBIcon far icon="edit mb-5" />
                 </MDBCol>
                 <MDBCol md="8">
