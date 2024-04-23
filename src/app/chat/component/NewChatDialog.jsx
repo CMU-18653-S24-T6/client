@@ -11,7 +11,7 @@ import {
     MessageGroup,
     Avatar
 } from "@chatscope/chat-ui-kit-react"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { chatRequester } from '@/utils/requester'
 import { getRole, getUid } from '@/utils/auth'
 import styles from '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
@@ -20,20 +20,24 @@ import  useWebSocket from '../hooks/useWebSocket';
 const ChatDialog = (props) => {
 
     const [clientId, setClientId] = useState('');
+    const clientIdRef = useRef(clientId);
     const [role, setRole] = useState('');
     const [chatList, setChatList] = useState([]);
+    const chatListRef = useRef(chatList);
     const [currentChat, setCurrentChat] = useState(null);
+    const currentChatRef = useRef(currentChat);
     const [messageList, setMessageList] = useState([]);
     const [sendState, setSendState] = useState(false);
 
     useEffect(() => {
-        setClientId(getUid())
         const currentRole = getRole()
+        const identity = currentRole === 'ADMIN' ? 'admin' : getUid();
+        setClientId(identity)
         setRole(currentRole)
         chatRequester.defaults.headers.common['Authorization'] = localStorage.getItem('token')
         if (currentRole === 'ADMIN') {
             chatRequester.get('/contacts').then(response => {
-                console.info('Admin access: return customer list')
+                console.info('Admin access: return history customer list: ')
                 console.info(response.data);
                 setChatList(response.data);
             }).catch(e => {
@@ -61,6 +65,18 @@ const ChatDialog = (props) => {
         }
     }, [currentChat]);
 
+    useEffect(() => {
+        chatListRef.current = chatList;
+    }, [chatList]);
+
+    useEffect(() => {
+        currentChatRef.current = currentChat;
+    }, [currentChat]);
+
+    useEffect(() => {
+        clientIdRef.current = clientId;
+    }, [clientId]);
+
     function useWebSocket() {
         const [ws, setWs] = useState(null);
 
@@ -79,29 +95,24 @@ const ChatDialog = (props) => {
                     let body = JSON.parse(e.data);
 
                     if (body.senderId !== clientId) {
-                        console.log('sender id is', body.senderId);
-                        if (chatList.find(item => item === body.senderId) === undefined) {
+                        const currentChatList = chatListRef.current;
+                        console.log("Chat list when message received:", currentChatList);
+                        if (!currentChatList.find(item => item === body.senderId)) {
                             setChatList(prev => [...prev, body.senderId]);
                         }
                     }
 
-                    if (currentChat) {
-                        if ((body.senderId === clientId && body.recipientId === currentChat) ||
-                            (body.senderId === currentChat && body.recipientId === clientId)) {
-                            if (body.recipientId === currentChat) {
-                                setMessageList(prev => [...prev, {
-                                    direction: 1,
-                                    message: body.content
-                                }]);
-                            } else {
-                                setMessageList(prev => [...prev, {
-                                    direction: 0,
-                                    message: body.content
-                                }]);
-                            }
-                        }
+                    console.log("current chatting with user: ", currentChatRef.current);
+                    if (currentChatRef.current) {
+                        const currentClientId = clientIdRef.current;
+                        console.log("current client id is: ", currentClientId);
+                        setMessageList(prev => [...prev, {
+                            direction: 0,
+                            message: body.content
+                        }]);
                     }
                 }
+
                 wsInstance.onerror = (error) => {
                     console.error('WebSocket error:', error);
                 };
@@ -125,7 +136,7 @@ const ChatDialog = (props) => {
     const ws = useWebSocket();
 
     const sendMsg = (msg) => {
-        let body = {
+        let payload = {
             action: "message",
             message: {
                 senderId: clientId,
@@ -134,7 +145,12 @@ const ChatDialog = (props) => {
                 timestamp: Date.now()
             }
         }
-        ws.send(JSON.stringify(body));
+        setMessageList(prev => [...prev, {
+            direction: 1,
+            message: payload.message.content
+        }]);
+        console.log(payload);
+        if (ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify(payload));
     }
 
     return (
@@ -144,8 +160,6 @@ const ChatDialog = (props) => {
                     <ConversationList>
                         {
                             chatList.map((item, index) => {
-                                console.log(item)
-                                console.log(index)
                                 return (<Conversation key={index} name={item.name}
                                                       active={currentChat === item}
                                                       onClick={e => setCurrentChat(item)}>
