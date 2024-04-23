@@ -113,12 +113,12 @@ const LogInOrSignUp = ({ setPage }) => {
                 Sign Up
             </Button>
             <hr />
-            <Button variant="outlined" fullWidth disabled>
+            {/* <Button variant="outlined" fullWidth disabled>
                 Log In with Google
             </Button>
             <Button variant="outlined" fullWidth disabled>
                 Log In with GitHub
-            </Button>
+            </Button> */}
             <Link href="/" className="w-full">
                 <Button variant="outlined" fullWidth>
                     Continue as Guest

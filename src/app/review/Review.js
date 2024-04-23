@@ -55,30 +55,36 @@ function Review({topicId}) {
     }
 
     return (
-        <div style={{width: "100%",textAlign: "center"}}>
-            <h1 className="flex-grow-1 text-center mb-0">UserReview</h1>
-            <CommentList comments={comments} show={showModalWithMsg}
-                         setMessage={setMessage} deleteComment={deleteComment}
-                         showReply={true} fetchMoreData={fetchMoreData} hasMore={hasMore}
-                         onLoading={loading}
+        <div style={{ width: '100%', textAlign: 'center' }}>
+            <h1 className="flex-grow-1 text-center mb-0 text-white">UserReview</h1>
+            <CommentList
+                comments={comments}
+                show={showModalWithMsg}
+                setMessage={setMessage}
+                deleteComment={deleteComment}
+                showReply={true}
+                fetchMoreData={fetchMoreData}
+                hasMore={hasMore}
+                onLoading={loading}
             />
-            <div style={{position: 'fixed', bottom: 0, width: '100%', textAlign: 'center', paddingBottom: '0px'}}>
-                <Button icon={<CommentOutlined/>} style={{width: '100%'}}
-                        onClick={() => {showModalWithMsg(message);}}>Comment</Button>
+            <div style={{ position: 'fixed', bottom: 0, width: '100%', textAlign: 'center', paddingBottom: '0px' }}>
+                <Button
+                    icon={<CommentOutlined />}
+                    style={{ width: '100%' }}
+                    onClick={() => {
+                        showModalWithMsg(message)
+                    }}
+                >
+                    Comment
+                </Button>
             </div>
             {isModalVisible && (
-                <Drawer
-                    placement="bottom"
-                    closable={false}
-                    onClose={closeModal}
-                    height={100}
-                    open={isModalVisible}
-                >
-                    <CommentForm msg={message} topicId={topicId} closeModel={closeModal} addComment={addComment}/>
+                <Drawer placement="bottom" closable={false} onClose={closeModal} height={100} open={isModalVisible}>
+                    <CommentForm msg={message} topicId={topicId} closeModel={closeModal} addComment={addComment} />
                 </Drawer>
             )}
         </div>
-    );
+    )
 }
 
 export default Review;
