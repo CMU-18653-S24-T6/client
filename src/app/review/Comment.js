@@ -149,9 +149,12 @@ const Comment = ({ topicId,rid, uid, content, date, updatedtime,deleteComment,sh
                 <div>
                     <SmallReplyList rid={rid} topicId={topicId}/>
                 </div>
-                {updatedTime && <div className="comment-datetime text-left" style={{ fontStyle: 'italic',fontSize: '12px',color: '#adb5bd' }}>Last edited on: {timeStampToFormat(updatedTime)}</div>}
+                {/*{updatedTime && <div className="comment-datetime text-left" style={{ fontStyle: 'italic',fontSize: '12px',color: '#adb5bd' }}>Last edited on: {timeStampToFormat(updatedTime)}</div>}*/}
                 <div className="d-flex justify-content-between">
-                    <div className="comment-datetime" style={{ color: '#ccc' ,fontSize: '12px'}}>{standardDate}</div>
+                    <div>
+                    {updatedTime && <div className="comment-datetime text-left" style={{ fontStyle: 'italic',fontSize: '12px',color: '#adb5bd' }}>Last edited on: {timeStampToFormat(updatedTime)}</div>}
+                    <div className="comment-datetime text-left" style={{ color: '#ccc' ,fontSize: '12px'}}>{standardDate}</div>
+                    </div>
                     {showReply && <Button icon={<CommentOutlined/>} onClick={(e)=>{e.stopPropagation();toReply();}}></Button>}
                 </div>
             </div>

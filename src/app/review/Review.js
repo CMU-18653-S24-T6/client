@@ -9,7 +9,6 @@ import { reviewRequester} from "@/utils/requester";
 function Review({topicId}) {
     const [comments, setComments] = useState([]);
     //set what comment need to reply
-
     const [message, setMessage] = useState({placeHolder: "Comment"});
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -55,28 +54,28 @@ function Review({topicId}) {
     }
 
     return (
-        <div style={{width: "100%",textAlign: "center"}}>
-            <h1 className="flex-grow-1 text-center mb-0">UserReview</h1>
+        <div style={{width: "100%",textAlign: "center",position:'relative'}}>
             <CommentList comments={comments} show={showModalWithMsg}
                          setMessage={setMessage} deleteComment={deleteComment}
                          showReply={true} fetchMoreData={fetchMoreData} hasMore={hasMore}
                          onLoading={loading}
             />
-            <div style={{position: 'fixed', bottom: 0, width: '100%', textAlign: 'center', paddingBottom: '0px'}}>
-                <Button icon={<CommentOutlined/>} style={{width: '100%'}}
+            <div style={{position: 'absolute', bottom: 0, width: '100%', textAlign: 'center', paddingBottom: '0px'}}>
+                <Button icon={<CommentOutlined/>} style={{width:"100%",boxSizing:'border-box'}}
                         onClick={() => {showModalWithMsg(message);}}>Comment</Button>
             </div>
-            {isModalVisible && (
-                <Drawer
+
+            ({isModalVisible && <Drawer
                     placement="bottom"
                     closable={false}
                     onClose={closeModal}
                     height={100}
                     open={isModalVisible}
-                >
-                    <CommentForm msg={message} topicId={topicId} closeModel={closeModal} addComment={addComment}/>
-                </Drawer>
-            )}
+                    getContainer=".parent-container"
+                    style={{ position:'absolute',bottom:0}}
+                    >
+               <CommentForm msg={message} topicId={topicId} closeModel={closeModal} addComment={addComment}/>
+            </Drawer>})
         </div>
     );
 }

@@ -9,7 +9,9 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import OrderButton from './orderButton'
 import Link from "next/link";
+import {Tabs} from "antd"
 import { Button } from '@mui/material'
+import Review from "@/app/review/Review";
 
 export const revalidate = 15
 export const dynamic = 'force-dynamic'
@@ -30,6 +32,13 @@ export default async function EventPage({ params }) {
     if (!stockData.ticketGroups) {
         stockData = { ticketGroups: [] }
     }
+    const items = [
+        {
+            key: '1',
+            label: 'Review',
+            children: <Review topicId={id} />
+        }
+    ]
 
     return (
         <div className="page flex justify-between">
@@ -72,10 +81,11 @@ export default async function EventPage({ params }) {
                                     ))}
                                 </TableBody>
                             </Table>
-                            <Link href={`/review/${id}`}>
-                                <Button>Event Review</Button>
-                            </Link>
                         </TableContainer>
+                        <Tabs
+                            defaultActiveKey="1"
+                            items={items}
+                        />
                     </div>
                 </div>
             </div>

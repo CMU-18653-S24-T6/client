@@ -77,7 +77,7 @@ function ReplyList({rid, topicId}) {
                 <div style={{width: "80px"}}></div>
             </div>
             <div>
-                <Card>
+                <Card style={{ width: '100%', height: 130 ,backgroundColor:'#f5f5f5'}}>
                     <Comment {...comments} show={showModalWithMsg} deleteComment={deleteComment}
                              style={{width: '100%'}} showReply={false}/>
                 </Card>

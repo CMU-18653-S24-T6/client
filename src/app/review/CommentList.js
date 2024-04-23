@@ -26,13 +26,14 @@ const CommentList = ({ comments , setMessage, deleteComment,showReply,fetchMoreD
         };
     }, [fetchMoreData, hasMore, onLoading]);
     return (
-        <div id="list-container" style={{ height: '800px', overflowY: 'auto' }}>
+        <div id="list-container" style={{ height: '500px', overflowY: 'auto' }}>
         <List
         dataSource={comments}
+        style={{backgroundColor: '#f5f5f5'}}
         itemLayout="horizontal"
         renderItem={props => (
             <List.Item className="comment-fade-enter comment-fade-enter-active" key={props.rid}>
-                <Card bordered={true} style={{ width: '100%' }}>
+                <Card bordered={true} style={{ width: '100%', height: 'auto' ,backgroundColor:'#f5f5f5'}}>
                     <Comment {...props} setMessage={setMessage} deleteComment={deleteComment} showReply={showReply}/>
                 </Card>
             </List.Item>
