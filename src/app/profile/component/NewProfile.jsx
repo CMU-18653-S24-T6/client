@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBTypography, MDBIcon } from 'mdb-react-ui-kit';
-import { Button } from "react-bootstrap";
+import {Button, Container} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Link from 'next/link';
 import {getUid} from "@/utils/auth";
