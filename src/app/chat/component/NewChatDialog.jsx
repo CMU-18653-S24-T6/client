@@ -9,15 +9,15 @@ import {
     Conversation,
     ConversationHeader,
     MessageGroup,
-    Avatar
+
 } from "@chatscope/chat-ui-kit-react"
 import { useEffect, useState, useRef } from "react"
-import { chatRequester } from '@/utils/requester'
+import {chatRequester, profileRequester} from '@/utils/requester'
 import { getRole, getUid } from '@/utils/auth'
 import styles from '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import  useWebSocket from '../hooks/useWebSocket';
 
-const ChatDialog = (props) => {
+const ChatDialog = () => {
 
     const [clientId, setClientId] = useState('');
     const clientIdRef = useRef(clientId);
@@ -45,17 +45,17 @@ const ChatDialog = (props) => {
             });
         } else {
             console.info('Customer access: return admin')
-            setCurrentChat('admin');
+            setCurrentChat({uid: 'admin', name: 'Admin'});
         }
     }, []);
 
     useEffect(() => {
         chatRequester.defaults.headers.common['Authorization'] = localStorage.getItem('token')
         if (currentChat) {
-            chatRequester.get(`/history/${currentChat}`).then(response => {
+            chatRequester.get(`/history/${currentChat.uid}`).then(response => {
                 setMessageList(response.data.map(item => {
                     return {
-                        direction: item.recipientId === currentChat ? 1 : 0,
+                        direction: item.recipientId === currentChat.uid ? 1 : 0,
                         message: item.content
                     }
                 }));
@@ -97,15 +97,15 @@ const ChatDialog = (props) => {
                     if (body.senderId !== clientId) {
                         const currentChatList = chatListRef.current;
                         console.log("Chat list when message received:", currentChatList);
-                        if (!currentChatList.find(item => item === body.senderId)) {
-                            setChatList(prev => [...prev, body.senderId]);
+
+                        const username = profileRequester.get(`/profile/username/${body.senderId}`);
+                        if (!currentChatList.find(item => item.uid === body.senderId)) {
+                            setChatList(prev => [...prev, {uid:body.senderId, name: username}]);
                         }
                     }
 
                     console.log("current chatting with user: ", currentChatRef.current);
                     if (currentChatRef.current) {
-                        const currentClientId = clientIdRef.current;
-                        console.log("current client id is: ", currentClientId);
                         setMessageList(prev => [...prev, {
                             direction: 0,
                             message: body.content
@@ -140,7 +140,7 @@ const ChatDialog = (props) => {
             action: "message",
             message: {
                 senderId: clientId,
-                recipientId: role === 'ADMIN' ? currentChat : 'admin',
+                recipientId: role === 'ADMIN' ? currentChat.uid : 'admin',
                 content: msg,
                 timestamp: Date.now()
             }
@@ -161,9 +161,8 @@ const ChatDialog = (props) => {
                         {
                             chatList.map((item, index) => {
                                 return (<Conversation key={index} name={item.name}
-                                                      active={currentChat === item}
+                                                      active={currentChat?.uid === item.uid}
                                                       onClick={e => setCurrentChat(item)}>
-                                    <Avatar src={"https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"}/>
                                 </Conversation>);
                             })}
                     </ConversationList>
@@ -172,7 +171,7 @@ const ChatDialog = (props) => {
                     <ConversationHeader>
                         <ConversationHeader.Content userName={currentChat?.name}/>
                     </ConversationHeader>
-                    <MessageList>
+                    <MessageList style={{height: "500px"}}>
                         {messageList.map((msg, index) => {
                             return (<MessageGroup key={index} direction={msg.direction}>
                                 <MessageGroup.Messages>

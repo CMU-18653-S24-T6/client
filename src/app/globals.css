@@ -57,3 +57,25 @@ h2 {
   margin: 0 auto;
   padding: 1rem;
 }
+
+.bottom-right-component {
+  position: fixed;
+  right: 5px;
+  bottom: 45px;
+  width: 600px;
+  height: 500px;
+  z-index: 100;
+}
+
+.bottom-right-button {
+  position: fixed;
+  right: 5px;
+  bottom: 5px;
+  width: 50px;
+  height: 50px;
+  z-index: 100;
+}
+
+.hidden {
+  display: none;
+}

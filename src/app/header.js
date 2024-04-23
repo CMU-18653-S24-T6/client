@@ -7,13 +7,23 @@ import Link from 'next/link'
 
 import ChatIcon from '@mui/icons-material/Chat'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import {Button} from "antd";
+import NewChatDialog from "@/app/chat/component/NewChatDialog";
+import ChatComponent from "@/app/chat/component/ChatComponent";
 
 export default function Header() {
     const [role, setRole] = useState(null)
+    const [isChatVisible, setIsChatVisible] = useState(false)
+
+    const toggleChat = () => {
+        setIsChatVisible(!isChatVisible);
+    };
+
     useEffect(() => {
         setRole(getRole())
     }, [])
     return (
+    <>
         <header className="py-4 px-8 bg-gray-700 flex justify-between">
             <div className="flex gap-8">
                 <span>ZenTicket</span>
@@ -32,7 +42,7 @@ export default function Header() {
                         <ShoppingCartIcon />
                     </Link>
                 )}
-                {role && <Link href="/chat"><ChatIcon /></Link>}
+
                 {role === 'USER' && (
                     <Link href="/profile">
                         Profile
@@ -41,5 +51,7 @@ export default function Header() {
                 {!role && <Link href="/login">Log In</Link>}
             </div>
         </header>
+        {role && <ChatComponent />}
+    </>
     )
 }
