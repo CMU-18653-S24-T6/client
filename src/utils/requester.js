@@ -22,7 +22,7 @@ const reviewRequester = axios.create({
 })
 
 const profileRequester = axios.create({
-     baseURL: "https://x9krx8dvgk.execute-api.us-west-2.amazonaws.com/default",
+     baseURL: process.env.NEXT_PUBLIC_BACKEND_PROFILE_ROOT,
      headers: {
          'Content-Type': 'application/json',
      },

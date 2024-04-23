@@ -8,19 +8,34 @@ import {
     ExclamationCircleOutlined
 } from '@ant-design/icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {reviewRequester} from "@/utils/requester";
+import {reviewRequester,profileRequester} from "@/utils/requester";
+import * as jose from 'jose'
 function CurrentComment({ topidId,rid, uid, content, date,updatedtime,deleteComment,addMemento}) {
     const [contents, setContents] = useState(content);
     const [updatedTime, setUpdatedTime] = useState(updatedtime);
     const [isEditing, setEditing] = useState(false);
+    const [userName, setUserName] = useState('');
     const dateFormat = new Date(date);
     const standardDate = `${dateFormat.getFullYear()}-${dateFormat.getMonth() + 1}-${dateFormat.getDate()} ${dateFormat.getHours()}:${dateFormat.getMinutes()}`;
+    const idToken = localStorage.getItem('idToken')
+    let decoded = null;
+    let currentUid = null;
+    if(idToken){
+        decoded = jose.decodeJwt(idToken)
+        currentUid = decoded.sub;
+    }
     useEffect(() => {
         setContents(content);
     }, [content]);
     useEffect(() => {
         setUpdatedTime(updatedtime);
     }, [updatedtime]);
+    useEffect(() => {
+        profileRequester.get(`/profile/username/${uid}`)
+            .then((response) => {
+                setUserName(response.data.username);
+            })
+    }, [uid]);
     const edit = () =>{
         setEditing(true);
     }
@@ -86,13 +101,12 @@ function CurrentComment({ topidId,rid, uid, content, date,updatedtime,deleteComm
             icon: <Button icon={<DeleteOutlined/>} onClick={(e)=>{e.stopPropagation();showDeleteConfirm()}}></Button>
         },
     ];
-    // onClick={(e)=>{e.stopPropagation();edit()}}
 
     return (
         <div className="comment">
             <div className="comment-body">
                 <div className="d-flex justify-content-between">
-                    <div className="comment-author" style={{ color: 'orange',fontSize: '17px' }}>{uid}</div>
+                    <div className="comment-author" style={{ color: 'orange',fontSize: '17px' }}>{userName}</div>
                     <div>
                         {/*<Button icon={<EditOutlined />} onClick={(e)=>{e.stopPropagation();edit()}}></Button>*/}
                         {/*<Button icon={<HistoryOutlined/>}></Button>*/}

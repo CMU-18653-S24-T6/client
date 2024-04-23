@@ -1,10 +1,19 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Modal} from "antd";
 import {DeleteOutlined, ExclamationCircleOutlined, UndoOutlined} from "@ant-design/icons";
-import {reviewRequester} from "@/utils/requester";
+import {reviewRequester,profileRequester} from "@/utils/requester";
+import * as jose from 'jose'
 function CommentMemento({cmid,commentid, uid, content, date,currentComment,setComments,addMemento,deleteMemento}) {
     const dateFormat = new Date(date);
     const standardDate = `${dateFormat.getFullYear()}-${dateFormat.getMonth() + 1}-${dateFormat.getDate()} ${dateFormat.getHours()}:${dateFormat.getMinutes()}`;
+    const [userName, setUserName] = useState('');
+    const idToken = localStorage.getItem('idToken')
+    let decoded = null;
+    let currentUid = null;
+    if(idToken){
+        decoded = jose.decodeJwt(idToken)
+        currentUid = decoded.sub;
+    }
     const undo = () => {
         const putData = {
             updateTime: Date.now(),
@@ -18,6 +27,12 @@ function CommentMemento({cmid,commentid, uid, content, date,currentComment,setCo
                 addMemento(currentComment);
             });
     }
+    useEffect(() => {
+        profileRequester.get(`/profile/username/${uid}`)
+            .then((response) => {
+                setUserName(response.data.username);
+            })
+    }, [uid]);
 
     const deleteComment2 = () => {
         reviewRequester.delete(`/reviews/histories/undo/${cmid}`)
@@ -60,7 +75,7 @@ function CommentMemento({cmid,commentid, uid, content, date,currentComment,setCo
         <div className="comment">
             <div className="comment-body">
                 <div className="d-flex justify-content-between">
-                    <div className="comment-author" style={{ color: 'orange',fontSize: '17px' }}>{uid}</div>
+                    <div className="comment-author" style={{ color: 'orange',fontSize: '17px' }}>{userName}</div>
                     <div>
                     <Button icon={<DeleteOutlined />} onClick={(e)=>{e.stopPropagation();showDeleteConfirm()}}></Button>
                     <Button icon={<UndoOutlined />} onClick={(e)=>{e.stopPropagation();showUndoConfirm()}}></Button>
