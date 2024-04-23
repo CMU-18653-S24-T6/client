@@ -15,6 +15,9 @@ import { useEffect, useState, useRef } from "react"
 import {chatRequester, profileRequester} from '@/utils/requester'
 import { getRole, getUid } from '@/utils/auth'
 import styles from '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
+import Button from "@mui/material/Button";
+import {Close} from "@mui/icons-material";
+import DeleteButton from "@/app/event-admin/deleteButton";
 
 const ChatDialog = () => {
 
@@ -27,6 +30,8 @@ const ChatDialog = () => {
     const currentChatRef = useRef(currentChat);
     const [messageList, setMessageList] = useState([]);
     const [sendState, setSendState] = useState(false);
+    const [incomingMessageName, setIncomingMessageName] = useState('');
+    const incomingMessageRef = useRef(incomingMessageName);
 
     useEffect(() => {
         const currentRole = getRole()
@@ -34,15 +39,14 @@ const ChatDialog = () => {
         setClientId(identity)
         setRole(currentRole)
         chatRequester.defaults.headers.common['Authorization'] = localStorage.getItem('token')
-        if (currentRole === 'ADMIN') {
-            chatRequester.get('/contacts').then(response => {
-                console.info('Admin access: return history customer list: ')
-                console.info(response.data);
-                setChatList(response.data);
-            }).catch(e => {
-                console.error(e);
-            });
-        } else {
+        chatRequester.get('/contacts').then(response => {
+            console.info('Admin access: return history customer list: ')
+            console.info(response.data);
+            setChatList(response.data);
+        }).catch(e => {
+            console.error(e);
+        });
+        if (currentRole === 'CUSTOMER') {
             console.info('Customer access: return admin')
             setCurrentChat({uid: 'admin', name: 'Admin'});
         }
@@ -76,6 +80,10 @@ const ChatDialog = () => {
         clientIdRef.current = clientId;
     }, [clientId]);
 
+    useEffect(() => {
+        incomingMessageRef.current = incomingMessageName;
+    }, [incomingMessageName]);
+
     function useWebSocket() {
         const [ws, setWs] = useState(null);
 
@@ -97,20 +105,27 @@ const ChatDialog = () => {
                         const currentChatList = chatListRef.current;
                         console.log("Chat list when message received:", currentChatList);
 
-                        const username = profileRequester.get(`/profile/username/${body.senderId}`).then(response => {
-                            return response.data;
+                        profileRequester.get(`/profile/username/${body.senderId}`)
+                            .then(response =>
+                            {
+                                if (!currentChatList.find(item => item.uid === body.senderId)) {
+                                    console.log("New client's name is: ", response.data);
+                                    setChatList(prev => [...prev, {uid:body.senderId, name: response.data}]);
+                                }
+                            })
+                            .catch(error => {
+                            console.error('Failed to fetch username:', error);
                         });
-                        if (!currentChatList.find(item => item.uid === body.senderId)) {
-                            setChatList(prev => [...prev, {uid:body.senderId, name: username}]);
-                        }
                     }
 
                     console.log("current chatting with user: ", currentChatRef.current);
                     if (currentChatRef.current) {
-                        setMessageList(prev => [...prev, {
-                            direction: 0,
-                            message: body.content
-                        }]);
+                        if (currentChatRef.current.id === body.senderId) {
+                            setMessageList(prev => [...prev, {
+                                direction: 0,
+                                message: body.content
+                            }]);
+                        }
                     }
                 }
 
@@ -161,10 +176,14 @@ const ChatDialog = () => {
                     <ConversationList>
                         {
                             chatList.map((item, index) => {
-                                return (<Conversation key={index} name={item.name}
+                                return (
+                                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                                        <Conversation key={index} name={item.name}
                                                       active={currentChat?.uid === item.uid}
                                                       onClick={e => setCurrentChat(item)}>
-                                </Conversation>);
+                                        </Conversation>
+
+                                    </div>);
                             })}
                     </ConversationList>
                 </Sidebar>
