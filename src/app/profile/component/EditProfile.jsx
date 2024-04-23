@@ -66,7 +66,7 @@ const EditProfile = ({ data, onSubmit }) => {
                 <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm="4">Date of Birth:</Form.Label>
                     <Col sm="8">
-                        <Form.Control name="dob" type='text' placeholder='YYYY-MM-DD' onChange={handleChange} value={formData.dob}></Form.Control>
+                        <Form.Control name="dob" type='text' placeholder='YYYY-MM-DD' onChange={handleChange} value={formData.dob.substring(0, 10)}></Form.Control>
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3">
