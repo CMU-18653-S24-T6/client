@@ -23,35 +23,33 @@ export default function Header() {
         setRole(getRole())
     }, [])
     return (
-    <>
-        <header className="py-4 px-8 bg-gray-700 flex justify-between">
-            <div className="flex gap-8">
-                <span>ZenTicket</span>
-                <span>
-                    {role === 'ADMIN' ? (
-                        <Link href="/event-admin">Manage Events</Link>
-                    ) : (
-                        <Link href="/event">Events</Link>
+        <>
+            <header className="py-4 px-8 bg-gray-700 flex justify-between">
+                <div className="flex gap-8">
+                    <Link href="/">
+                        <span>ZenTicket</span>
+                    </Link>
+                    <span>
+                        {role === 'ADMIN' ? (
+                            <Link href="/event-admin">Manage Events</Link>
+                        ) : (
+                            <Link href="/event">Events</Link>
+                        )}
+                    </span>
+                    <span>{role === 'ADMIN' && <Link href="/order-admin">Manage Orders</Link>}</span>
+                </div>
+                <div className="flex gap-8 items-end">
+                    {role === 'USER' && (
+                        <Link href="/order">
+                            <ShoppingCartIcon />
+                        </Link>
                     )}
-                </span>
-                <span>{role === 'ADMIN' && <Link href="/order-admin">Manage Orders</Link>}</span>
-            </div>
-            <div className="flex gap-8 items-end">
-                {role === 'USER' && (
-                    <Link href="/order">
-                        <ShoppingCartIcon />
-                    </Link>
-                )}
 
-                {role === 'USER' && (
-                    <Link href="/profile">
-                        Profile
-                    </Link>
-                )}
-                {!role && <Link href="/login">Log In</Link>}
-            </div>
-        </header>
-        {role && <ChatComponent />}
-    </>
+                    {role === 'USER' && <Link href="/profile">Profile</Link>}
+                    {!role && <Link href="/login">Log In</Link>}
+                </div>
+            </header>
+            {role && <ChatComponent />}
+        </>
     )
 }
