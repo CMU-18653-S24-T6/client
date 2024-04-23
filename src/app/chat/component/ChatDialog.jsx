@@ -15,7 +15,6 @@ import { useEffect, useState, useRef } from "react"
 import {chatRequester, profileRequester} from '@/utils/requester'
 import { getRole, getUid } from '@/utils/auth'
 import styles from '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
-import  useWebSocket from '../hooks/useWebSocket';
 
 const ChatDialog = () => {
 
@@ -98,7 +97,9 @@ const ChatDialog = () => {
                         const currentChatList = chatListRef.current;
                         console.log("Chat list when message received:", currentChatList);
 
-                        const username = profileRequester.get(`/profile/username/${body.senderId}`);
+                        const username = profileRequester.get(`/profile/username/${body.senderId}`).then(response => {
+                            return response.data;
+                        });
                         if (!currentChatList.find(item => item.uid === body.senderId)) {
                             setChatList(prev => [...prev, {uid:body.senderId, name: username}]);
                         }
