@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import NewChatDialog from './NewChatDialog';
+import ChatDialog from './ChatDialog';
 import {Box} from "@mui/material";
 import {Button} from "react-bootstrap";
 import ChatIcon from "@mui/icons-material/Chat";
@@ -23,7 +23,7 @@ function ChatComponent() {
             </Button>}
             <Box className={`${isVisible ? '' : 'hidden'} bottom-right-component`}>
                 <Button onClick={closeChatWindow}><Close></Close></Button>
-                <NewChatDialog />
+                <ChatDialog />
             </Box>
         </Box>
     );

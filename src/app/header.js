@@ -8,7 +8,7 @@ import Link from 'next/link'
 import ChatIcon from '@mui/icons-material/Chat'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import {Button} from "antd";
-import NewChatDialog from "@/app/chat/component/NewChatDialog";
+import NewChatDialog from "@/app/chat/component/ChatDialog";
 import ChatComponent from "@/app/chat/component/ChatComponent";
 
 export default function Header() {
