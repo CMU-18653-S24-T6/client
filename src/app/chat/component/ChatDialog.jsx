@@ -15,7 +15,7 @@ import { useEffect, useState, useRef } from "react"
 import {chatRequester, profileRequester} from '@/utils/requester'
 import { getRole, getUid } from '@/utils/auth'
 import styles from '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
-import Button from "@mui/material/Button";
+import { Button } from "react-bootstrap";
 import {Close} from "@mui/icons-material";
 import DeleteButton from "@/app/event-admin/deleteButton";
 
@@ -170,21 +170,20 @@ const ChatDialog = () => {
     }
 
     return (
-        <>
+        <div style={{display: 'relative'}}>
+            <Button className={'end-chat-button'}>End Chat</Button>
             <MainContainer>
                 <Sidebar position={"left"}>
                     <ConversationList>
                         {
                             chatList.map((item, index) => {
                                 return (
-                                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                                         <Conversation key={index} name={item.name}
                                                       active={currentChat?.uid === item.uid}
                                                       onClick={e => setCurrentChat(item)}>
-                                        </Conversation>
-
-                                    </div>);
-                            })}
+                                        </Conversation>)
+                            })
+                        }
                     </ConversationList>
                 </Sidebar>
                 <ChatContainer>
@@ -208,7 +207,7 @@ const ChatDialog = () => {
                                   onSend={sendMsg}></MessageInput>
                 </ChatContainer>
             </MainContainer>
-        </>
+        </div>
     )
 }
 

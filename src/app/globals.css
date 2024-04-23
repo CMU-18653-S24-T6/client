@@ -79,3 +79,14 @@ h2 {
 .hidden {
   display: none;
 }
+
+.end-chat-button {
+  position: absolute;
+  top: 1px;
+  right: 10px;
+  padding: 5px 5px;
+  background-color: #6ac0e2;
+  color: #292323;
+  border: none;
+  cursor: pointer;
+}

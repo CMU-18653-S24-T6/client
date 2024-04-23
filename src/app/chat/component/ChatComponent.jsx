@@ -22,7 +22,7 @@ function ChatComponent() {
                 <ChatIcon />
             </Button>}
             <Box className={`${isVisible ? '' : 'hidden'} bottom-right-component`}>
-                <Button onClick={closeChatWindow}><Close></Close></Button>
+                <Button onClick={closeChatWindow}>Hide</Button>
                 <ChatDialog />
             </Box>
         </Box>
