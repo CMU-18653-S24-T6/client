@@ -32,7 +32,7 @@ export default function Header() {
                         <ShoppingCartIcon />
                     </Link>
                 )}
-                {role && <ChatIcon />}
+                {role && <Link href="/chat"><ChatIcon /></Link>}
                 {role === 'USER' && (
                     <Link href="/profile">
                         Profile
