@@ -12,7 +12,8 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/navigation';
 import {SmallReplyList} from "./SmallReplyList/SmallReplyList";
-import {reviewRequester} from "@/utils/requester";
+import {reviewRequester,profileRequester} from "@/utils/requester";
+import * as jose from 'jose'
 const Comment = ({ topicId,rid, uid, content, date, updatedtime,deleteComment,showReply}) => {
     const [contents, setContents] = useState(content);
     const [updatedTime, setUpdatedTime] = useState(updatedtime);
@@ -20,6 +21,14 @@ const Comment = ({ topicId,rid, uid, content, date, updatedtime,deleteComment,sh
     const [isEditing, setEditing] = useState(false);
     const dateFormat = new Date(date);
     const standardDate = `${dateFormat.getFullYear()}-${dateFormat.getMonth() + 1}-${dateFormat.getDate()} ${dateFormat.getHours()}:${dateFormat.getMinutes()}`;
+    const idToken = localStorage.getItem('idToken')
+    let decoded = null;
+    let currentUid = null;
+    if(idToken){
+        decoded = jose.decodeJwt(idToken)
+        currentUid = decoded.sub;
+    }
+    const [userName, setUserName] = useState('');
     const toReply = () => {
         navigate.push(`/review/${topicId}/${rid}`);
     }
@@ -29,11 +38,17 @@ const Comment = ({ topicId,rid, uid, content, date, updatedtime,deleteComment,sh
     useEffect(() => {
         setUpdatedTime(updatedtime);
     }, [updatedtime]);
+    useEffect(() => {
+        profileRequester.get(`/profile/username/12345678`)
+            .then((response) => {
+                setUserName(response.data.username);
+            });
+    }, [uid]);
     const msg = {
         rid,
         uid,
         content,
-        placeHolder: `Reply@${uid}`
+        placeHolder: `Reply@${userName}`
     }
     const edit = () =>{
         setEditing(true);
@@ -66,7 +81,7 @@ const Comment = ({ topicId,rid, uid, content, date, updatedtime,deleteComment,sh
 
     const showDeleteConfirm = () => {
         Modal.confirm({
-            title: 'Are you sure deleting this comment?？',
+            title: 'Are you sure deleting this comment?',
             icon: <ExclamationCircleOutlined />,
             okText: 'yes',
             okType: 'danger',
@@ -103,20 +118,15 @@ const Comment = ({ topicId,rid, uid, content, date, updatedtime,deleteComment,sh
             icon: <Button icon={<DeleteOutlined/>} onClick={(e)=>{e.stopPropagation();showDeleteConfirm()}}></Button>
         },
     ];
-    // onClick={(e)=>{e.stopPropagation();edit()}}
-
 
     return (
         <div className="comment">
             <div className="comment-body">
                 <div className="d-flex justify-content-between">
-                    <div className="comment-author" style={{ color: 'orange',fontSize: '17px' }}>{uid}</div>
+                    <div className="comment-author" style={{ color: 'orange',fontSize: '17px' }}>{userName}</div>
                     <div>
-                        {/*<Button icon={<EditOutlined />} onClick={(e)=>{e.stopPropagation();edit()}}></Button>*/}
-                        {/*<Button icon={<HistoryOutlined/>}></Button>*/}
                         <Dropdown menu={{items}} onClick={(e)=>e.stopPropagation()}>
                             <EllipsisOutlined onClick={(e)=>e.stopPropagation()}/>
-                            {/*<Button icon={<EllipsisOutlined/>}></Button>*/}
                         </Dropdown>
                     </div>
                 </div>

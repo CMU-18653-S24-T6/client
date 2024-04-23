@@ -3,13 +3,19 @@ import { Form, Input, Button, Row, Col  } from 'antd';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {SendOutlined} from "@ant-design/icons";
 import {reviewRequester} from "@/utils/requester";
-
+import * as jose from 'jose'
 const CommentForm = ({ msg, topicId, closeModel, addComment}) => {
     const [comment, setComment] = useState('');
-
+    const idToken = localStorage.getItem('idToken')
+    let decoded = null;
+    let currentUid = null;
+    if(idToken){
+        decoded = jose.decodeJwt(idToken)
+        currentUid = decoded.sub;
+    }
     const handleSubmit = () => {
         const postData = {
-            uid: "Richard",
+            uid: currentUid,
             content: comment,
             parentId: msg.rid,
             date: Date.now()
