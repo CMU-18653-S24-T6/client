@@ -35,7 +35,7 @@ export default function PersonalProfile({data, onEdit}) {
                                     <MDBCardImage src={data?.avatar || "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"}
                                                   alt="Avatar" className="my-5" style={{ width: '80px' }} fluid />
                                     <MDBTypography tag="h5" style={{ color: '#000000' }}>{fullName}</MDBTypography>
-                                    <Button variant="info" size="sm" className="mt-3 custom-button">
+                                    <Button variant="info" size="sm" className="mt-3 custom-button" style={{ color: '#000000' }}>
                                         <Link href={`/review/history/${uid}`} style={{ color: '#000000' }}>
                                             Reviews
                                         </Link>
