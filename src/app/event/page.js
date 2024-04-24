@@ -22,7 +22,7 @@ export default async function EventPage() {
                     <li key={event.id} className="my-8 flex justify-between gap-8 items-start">
                         <div className="flex flex-col gap-2 items-start">
                             <h2 className="mb-1">{event.eventName}</h2>
-                            <p>{moment(event.eventStartTime).format('MMM DD, YYYY hh:mm')}</p>
+                            <p className="text-gray-300">{moment(event.eventStartTime).format('MMM DD, YYYY hh:mm')}</p>
                             <p className="text-gray-300 font-light">{event.description}</p>
                             <Link href={`/event/${event.id}`}>
                                 <Button variant="contained" color="primary">

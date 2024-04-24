@@ -28,13 +28,13 @@ export default async function EventDescription({ id }) {
     }
 
     return (
-        <div className="page flex justify-between">
+        <div className="page flex justify-between items-start gap-8">
             <div className="flex justify-between">
                 <div className="flex flex-col gap-4">
                     <div className="flex flex-col gap-1">
                         <h1>{event.eventName}</h1>
                         <p className="text-gray-300">{moment(event.eventStartTime).format('MMM DD, YYYY HH:MM')}</p>
-                        <p>{event.description}</p>
+                        <p className=" text-white">{event.description}</p>
                     </div>
                     <div className="flex flex-col gap-1">
                         <h2 className="my-0">Ticket Information</h2>
@@ -72,14 +72,7 @@ export default async function EventDescription({ id }) {
                     </div>
                 </div>
             </div>
-            <div>
-                <img
-                    src={process.env.NEXT_PUBLIC_EVENT_IMG_PREFIX + event.imageUri}
-                    alt={event.eventName}
-                    height="300"
-                    width="400"
-                />
-            </div>
+            <img src={event.imageUri} alt={event.eventName} height="300" width="400" />
         </div>
     )
 }

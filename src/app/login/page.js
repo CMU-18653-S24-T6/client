@@ -157,7 +157,7 @@ export default function Home() {
     const [page, setPage] = useState('login') // 'login' or 'verify'
     return (
         <>
-            <main className="flex flex-col min-h-screen items-center justify-center gap-64 p-4">
+            <main className="flex flex-col min-h-screen items-center justify-center gap-64 p-4 text-white">
                 <div className="flex items-center justify-center gap-12 flex-wrap">
                     <div className="flex flex-col gap-6 max-w-96">
                         <h1 className="text-4xl font-bold">Welcome to ZenTicket</h1>
