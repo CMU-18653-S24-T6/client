@@ -107,14 +107,11 @@ function CurrentComment({ topidId,rid, uid, content, date,updatedtime,deleteComm
             <div className="comment-body">
                 <div className="d-flex justify-content-between">
                     <div className="comment-author" style={{ color: 'orange',fontSize: '17px' }}>{userName}</div>
-                    <div>
-                        {/*<Button icon={<EditOutlined />} onClick={(e)=>{e.stopPropagation();edit()}}></Button>*/}
-                        {/*<Button icon={<HistoryOutlined/>}></Button>*/}
+                    {(currentUid === uid) && <div>
                         <Dropdown menu={{items}} onClick={(e)=>e.stopPropagation()}>
                             <EllipsisOutlined onClick={(e)=>e.stopPropagation()}/>
-                            {/*<Button icon={<EllipsisOutlined/>}></Button>*/}
                         </Dropdown>
-                    </div>
+                    </div>}
                 </div>
                 {isEditing ? (
                     <div>
