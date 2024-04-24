@@ -30,7 +30,7 @@ function CommentMemento({cmid,commentid, uid, content, date,currentComment,setCo
     useEffect(() => {
         profileRequester.get(`/profile/username/${uid}`)
             .then((response) => {
-                setUserName(response.data.username);
+                setUserName(response.data);
             })
     }, [uid]);
 

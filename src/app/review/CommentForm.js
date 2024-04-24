@@ -38,7 +38,7 @@ const CommentForm = ({ msg, topicId, closeModel, addComment}) => {
                 </Col>
                 <Col span={4}>
                     <Form.Item>
-                        <Button type="primary" onClick={handleSubmit} icon={<SendOutlined />}></Button>
+                        <Button type="primary" onClick={handleSubmit} icon={<SendOutlined />} disabled={!comment.length}></Button>
                     </Form.Item>
                 </Col>
             </Row>

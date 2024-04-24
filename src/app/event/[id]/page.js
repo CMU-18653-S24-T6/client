@@ -1,85 +1,32 @@
-import { eventRequester, orderRequester } from '@/utils/requester'
-import moment from 'moment'
-
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import OrderButton from './orderButton'
-import Link from "next/link";
-import { Button } from '@mui/material'
-
+import ReviewWrapper from "@/app/review/ReviewWrapper";
+import EventDescription from "@/app/event/[id]/eventDescription";
 export const revalidate = 15
 export const dynamic = 'force-dynamic'
+import { Tabs } from "antd";
 
-export default async function EventPage({ params }) {
-    const { id } = params // event id
-    const events = await eventRequester.get(`/`)
-    const event = events.data.find(event => event.id === id)
-    let stockData
-    try {
-        const stock = await orderRequester.get(`/events/${id}`)
-        stockData = stock.data
-    } catch (e) {
-        console.error(e)
-        stockData = { ticketGroups: [] }
-    }
-
-    if (!stockData.ticketGroups) {
-        stockData = { ticketGroups: [] }
-    }
-
+export default function EventPage({ params }){
+    const { id } = params;
+    const items = [
+        {
+            key: '1',
+            label: 'Description',
+            children: <EventDescription id={id} />
+        },
+        {
+            key: '2',
+            label: 'Review',
+            children: <ReviewWrapper topicId={id} />
+        }
+    ]
     return (
-        <div className="page flex justify-between gap-8 items-start">
-            <div className="flex justify-between gap-4">
-                <div className="flex flex-col gap-4">
-                    <div className="flex flex-col gap-1">
-                        <h1>{event.eventName}</h1>
-                        <p className="text-gray-300">{moment(event.eventStartTime).format('MMM DD, YYYY HH:MM')}</p>
-                        <p>{event.description}</p>
-                    </div>
-                    <div className="flex flex-col gap-1">
-                        <h2 className="my-0">Ticket Information</h2>
-                        <TableContainer>
-                            <Table sx={{ minWidth: 650 }}>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell align="right"></TableCell>
-                                        <TableCell align="right">Price</TableCell>
-                                        <TableCell align="right">Availability</TableCell>
-                                        <TableCell align="right">Order</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {stockData.ticketGroups.map(row => (
-                                        <TableRow
-                                            key={row.name}
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-                                            <TableCell component="th" scope="row" align="left">
-                                                {row.groupName}
-                                            </TableCell>
-                                            <TableCell align="right">${row.price}</TableCell>
-                                            <TableCell align="right">{row.stock}</TableCell>
-                                            <TableCell align="right">
-                                                <OrderButton data={row} eventData={event}>
-                                                    Order Now
-                                                </OrderButton>
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                            <Link href={`/review/${id}`}>
-                                <Button>Event Review</Button>
-                            </Link>
-                        </TableContainer>
-                    </div>
-                </div>
-            </div>
-            <img src={event.imageUri} alt={event.eventName} width="400" />
+        <div>
+            <Tabs defaultActiveKey="1"
+                  items={items}
+                  style={{ width: '100%', height: '100%'}}
+            />
         </div>
     )
 }
+
+
+

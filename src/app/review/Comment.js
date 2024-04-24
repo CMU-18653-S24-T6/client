@@ -10,7 +10,7 @@ import {
     HistoryOutlined
 } from '@ant-design/icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useRouter } from 'next/navigation';
+import { useRouter,usePathname } from 'next/navigation';
 import {SmallReplyList} from "./SmallReplyList/SmallReplyList";
 import {reviewRequester,profileRequester} from "@/utils/requester";
 import * as jose from 'jose'
@@ -22,6 +22,7 @@ const Comment = ({ topicId,rid, uid, content, date, updatedtime,deleteComment,sh
     const dateFormat = new Date(date);
     const standardDate = `${dateFormat.getFullYear()}-${dateFormat.getMonth() + 1}-${dateFormat.getDate()} ${dateFormat.getHours()}:${dateFormat.getMinutes()}`;
     const idToken = localStorage.getItem('idToken')
+    const pathname = usePathname();
     let decoded = null;
     let currentUid = null;
     if(idToken){
@@ -30,7 +31,8 @@ const Comment = ({ topicId,rid, uid, content, date, updatedtime,deleteComment,sh
     }
     const [userName, setUserName] = useState('');
     const toReply = () => {
-        navigate.push(`/review/${topicId}/${rid}`);
+        // navigate.push(`/review/${topicId}/${rid}`);
+        navigate.push(`${pathname}?view=reply&rid=${rid}`,{scroll: false});
     }
     useEffect(() => {
         setContents(content);
@@ -38,10 +40,11 @@ const Comment = ({ topicId,rid, uid, content, date, updatedtime,deleteComment,sh
     useEffect(() => {
         setUpdatedTime(updatedtime);
     }, [updatedtime]);
+    // TODO replace with the actual user name
     useEffect(() => {
-        profileRequester.get(`/profile/username/12345678`)
+        profileRequester.get(`/profile/username/${uid}`)
             .then((response) => {
-                setUserName(response.data.username);
+                setUserName(response.data);
             });
     }, [uid]);
     const msg = {
@@ -96,7 +99,8 @@ const Comment = ({ topicId,rid, uid, content, date, updatedtime,deleteComment,sh
     };
 
     const showHistory = () => {
-        navigate.push(`/review/mementos/${topicId}/${rid}`)
+        // navigate.push(`/review/mementos/${topicId}/${rid}`)
+        navigate.push(`${pathname}?view=memento&rid=${rid}`,{scroll: false});
     }
 
     const cancelUpdate = () => {
@@ -132,15 +136,15 @@ const Comment = ({ topicId,rid, uid, content, date, updatedtime,deleteComment,sh
                 </div>
                 {isEditing ? (
                     <div>
-                    <Input.TextArea
-                        value={contents}
-                        onChange={(e) => setContents(e.target.value)}
-                        onClick={event => event.stopPropagation()}
-                        style={{ border: 'none',fontSize: '17px'  }}
-                    />
-                    <Button onClick={(e) =>{updateComment(e)}}>
-                        Save
-                    </Button>
+                        <Input.TextArea
+                            value={contents}
+                            onChange={(e) => setContents(e.target.value)}
+                            onClick={event => event.stopPropagation()}
+                            style={{ border: 'none',fontSize: '17px'  }}
+                        />
+                        <Button onClick={(e) =>{updateComment(e)}}>
+                            Save
+                        </Button>
                         <Button onClick={(e) =>{cancelUpdate(e)}}>
                             Cancel
                         </Button>
@@ -149,9 +153,12 @@ const Comment = ({ topicId,rid, uid, content, date, updatedtime,deleteComment,sh
                 <div>
                     <SmallReplyList rid={rid} topicId={topicId}/>
                 </div>
-                {updatedTime && <div className="comment-datetime text-left" style={{ fontStyle: 'italic',fontSize: '12px',color: '#adb5bd' }}>Last edited on: {timeStampToFormat(updatedTime)}</div>}
+                {/*{updatedTime && <div className="comment-datetime text-left" style={{ fontStyle: 'italic',fontSize: '12px',color: '#adb5bd' }}>Last edited on: {timeStampToFormat(updatedTime)}</div>}*/}
                 <div className="d-flex justify-content-between">
-                    <div className="comment-datetime" style={{ color: '#ccc' ,fontSize: '12px'}}>{standardDate}</div>
+                    <div>
+                        {updatedTime && <div className="comment-datetime text-left" style={{ fontStyle: 'italic',fontSize: '12px',color: '#adb5bd' }}>Last edited on: {timeStampToFormat(updatedTime)}</div>}
+                        <div className="comment-datetime text-left" style={{ color: '#ccc' ,fontSize: '12px'}}>{standardDate}</div>
+                    </div>
                     {showReply && <Button icon={<CommentOutlined/>} onClick={(e)=>{e.stopPropagation();toReply();}}></Button>}
                 </div>
             </div>

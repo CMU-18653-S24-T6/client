@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import { List, Card } from 'antd';
 import Comment from './Comment';
 import './css/App.css';
-const CommentList = ({ comments , setMessage, deleteComment,showReply,fetchMoreData,hasMore,onLoading}) => {
+const CommentList = ({ comments , setMessage, deleteComment,showReply,fetchMoreData,hasMore,onLoading,height}) => {
     useEffect(() => {
         const listContainer = document.getElementById('list-container');
         const handleScroll = () => {
@@ -26,19 +26,20 @@ const CommentList = ({ comments , setMessage, deleteComment,showReply,fetchMoreD
         };
     }, [fetchMoreData, hasMore, onLoading]);
     return (
-        <div id="list-container" style={{ height: '800px', overflowY: 'auto' }}>
-        <List
-        dataSource={comments}
-        itemLayout="horizontal"
-        renderItem={props => (
-            <List.Item className="comment-fade-enter comment-fade-enter-active" key={props.rid}>
-                <Card bordered={true} style={{ width: '100%' }}>
-                    <Comment {...props} setMessage={setMessage} deleteComment={deleteComment} showReply={showReply}/>
-                </Card>
-            </List.Item>
-        )}/>
-    </div>
-);
+        <div id="list-container" style={{ height: height, overflowY: 'auto' }}>
+            <List
+                dataSource={comments}
+                style={{backgroundColor: '#f5f5f5'}}
+                itemLayout="horizontal"
+                renderItem={props => (
+                    <List.Item className="comment-fade-enter comment-fade-enter-active" key={props.rid}>
+                        <Card bordered={true} style={{ width: '100%', height: 'auto' ,backgroundColor:'#f5f5f5'}}>
+                            <Comment {...props} setMessage={setMessage} deleteComment={deleteComment} showReply={showReply}/>
+                        </Card>
+                    </List.Item>
+                )}/>
+        </div>
+    );
 }
 
 export default CommentList;
