@@ -3,7 +3,6 @@ import ChatDialog from './ChatDialog';
 import {Box} from "@mui/material";
 import {Button} from "react-bootstrap";
 import ChatIcon from "@mui/icons-material/Chat";
-import {Close} from "@mui/icons-material";
 
 function ChatComponent() {
     const [isVisible, setIsVisible] = useState(false);

@@ -16,8 +16,6 @@ import {chatRequester, profileRequester} from '@/utils/requester'
 import { getRole, getUid } from '@/utils/auth'
 import styles from '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import { Button } from "react-bootstrap";
-import {Close} from "@mui/icons-material";
-import DeleteButton from "@/app/event-admin/deleteButton";
 
 const ChatDialog = () => {
 
@@ -120,7 +118,7 @@ const ChatDialog = () => {
 
                     console.log("current chatting with user: ", currentChatRef.current);
                     if (currentChatRef.current) {
-                        if (currentChatRef.current.id === body.senderId) {
+                        if (currentChatRef.current.uid === body.senderId) {
                             setMessageList(prev => [...prev, {
                                 direction: 0,
                                 message: body.content
@@ -170,8 +168,6 @@ const ChatDialog = () => {
     }
 
     return (
-        <div style={{display: 'relative'}}>
-            <Button className={'end-chat-button'}>End Chat</Button>
             <MainContainer>
                 <Sidebar position={"left"}>
                     <ConversationList>
@@ -207,7 +203,6 @@ const ChatDialog = () => {
                                   onSend={sendMsg}></MessageInput>
                 </ChatContainer>
             </MainContainer>
-        </div>
     )
 }
 
