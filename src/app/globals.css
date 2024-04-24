@@ -9,13 +9,13 @@
   }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: #ffffff;
   background: linear-gradient(
       to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
+      #2a2c33,
+      #2a2c33
     )
-    rgb(var(--background-start-rgb));
+    #2a2c33;
 }
 
 @layer utilities {
@@ -25,8 +25,8 @@ body {
 }
 
 hr {
-  border-top: 1px solid rgba(var(--foreground-rgb), 0.1);
-  border-bottom: 1px solid rgba(var(--background-end-rgb), 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   width: 100%;
 }
 
@@ -56,4 +56,37 @@ h2 {
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem;
+}
+
+.bottom-right-component {
+  position: fixed;
+  right: 5px;
+  bottom: 45px;
+  width: 600px;
+  height: 500px;
+  z-index: 100;
+}
+
+.bottom-right-button {
+  position: fixed;
+  right: 5px;
+  bottom: 5px;
+  width: 50px;
+  height: 50px;
+  z-index: 100;
+}
+
+.hidden {
+  display: none;
+}
+
+.end-chat-button {
+  position: absolute;
+  top: 1px;
+  right: 10px;
+  padding: 5px 5px;
+  background-color: #6ac0e2;
+  color: #292323;
+  border: none;
+  cursor: pointer;
 }
