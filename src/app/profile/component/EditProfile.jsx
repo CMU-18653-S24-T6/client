@@ -30,47 +30,47 @@ const EditProfile = ({ data, onSubmit }) => {
     return (
         <Container>
             <Row className="mb-3">
-                <Col sm="4"><h2>{edit ? 'Edit' : 'New'} Profile</h2></Col>
+                <Col sm="4"><h2 style={{ color: '#FFFFFF' }}>{edit ? 'Edit' : 'New'} Profile</h2></Col>
             </Row>
             <Form onSubmit={handleSubmit}>
                 <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm="4">Avatar:</Form.Label>
+                    <Form.Label column sm="4" style={{color:'#FFFFFF'}}>Avatar:</Form.Label>
                     <Col sm="8">
-                        <Form.Control style={{color:'#000000'}} name="avatar" type='text' placeholder='Image url' onChange={handleChange} value={formData.avatar}></Form.Control>
+                        <Form.Control name="avatar" type='text' placeholder='Image url' onChange={handleChange} value={formData.avatar}></Form.Control>
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm="4">First Name:</Form.Label>
+                    <Form.Label column sm="4" style={{color:'#FFFFFF'}}>First Name:</Form.Label>
                     <Col sm="8">
-                        <Form.Control style={{color:'#000000'}} name="firstName" type='text' placeholder='First Name' onChange={handleChange} value={formData.firstName}></Form.Control>
+                        <Form.Control name="firstName" type='text' placeholder='First Name' onChange={handleChange} value={formData.firstName}></Form.Control>
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm="4">Last Name:</Form.Label>
+                    <Form.Label column sm="4" style={{color:'#FFFFFF'}}>Last Name:</Form.Label>
                     <Col sm="8">
                         <Form.Control name="lastName" type='text' placeholder='Last Name' onChange={handleChange} value={formData.lastName}></Form.Control>
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm="4">Email:</Form.Label>
+                    <Form.Label column sm="4" style={{color:'#FFFFFF'}}>Email:</Form.Label>
                     <Col sm="8">
                         <Form.Control name="email" type='text' placeholder='info@example.com' onChange={handleChange} value={formData.email}></Form.Control>
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm="4">Address:</Form.Label>
+                    <Form.Label column sm="4" style={{color:'#FFFFFF'}}>Address:</Form.Label>
                     <Col sm="8">
                         <Form.Control name="address" type='text' placeholder='Address' onChange={handleChange} value={formData.address}></Form.Control>
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm="4">Date of Birth:</Form.Label>
+                    <Form.Label column sm="4" style={{color:'#FFFFFF'}}>Date of Birth:</Form.Label>
                     <Col sm="8">
                         <Form.Control name="dob" type='text' placeholder='YYYY-MM-DD' onChange={handleChange} value={formData.dob.substring(0, 10)}></Form.Control>
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm="4">Tel:</Form.Label>
+                    <Form.Label column sm="4" style={{color:'#FFFFFF'}}>Tel:</Form.Label>
                     <Col sm="8">
                         <Form.Control name="tel" type='text' placeholder='000-000-0000' onChange={handleChange} value={formData.tel}></Form.Control>
                     </Col>
