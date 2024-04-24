@@ -57,7 +57,7 @@ export default function PersonalProfile({data, onEdit}) {
                       </MDBCol>
                       <MDBCol size="6" className="mb-3">
                         <MDBTypography tag="h6">Date of Birth</MDBTypography>
-                        <MDBCardText className="text-muted">{data?.dob.substring(0,10)}</MDBCardText>
+                        <MDBCardText className="text-muted">{data?.dob}</MDBCardText>
                       </MDBCol>
                       <MDBCol size="6" className="mb-3">
                         <MDBTypography tag="h6">Address</MDBTypography>
