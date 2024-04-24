@@ -76,10 +76,10 @@ function CommentMemento({cmid,commentid, uid, content, date,currentComment,setCo
             <div className="comment-body">
                 <div className="d-flex justify-content-between">
                     <div className="comment-author" style={{ color: 'orange',fontSize: '17px' }}>{userName}</div>
-                    <div>
-                    <Button icon={<DeleteOutlined />} onClick={(e)=>{e.stopPropagation();showDeleteConfirm()}}></Button>
-                    <Button icon={<UndoOutlined />} onClick={(e)=>{e.stopPropagation();showUndoConfirm()}}></Button>
-                    </div>
+                    {(currentUid === uid)&&<div>
+                        <Button icon={<DeleteOutlined />} onClick={(e)=>{e.stopPropagation();showDeleteConfirm()}}></Button>
+                        <Button icon={<UndoOutlined />} onClick={(e)=>{e.stopPropagation();showUndoConfirm()}}></Button>
+                    </div>}
                 </div>
                 <div className="text-start text-wrap text-break" style={{ fontSize: '17px' }}>{content}</div>
                 <div className="d-flex justify-content-between">

@@ -107,21 +107,22 @@ const Comment = ({ topicId,rid, uid, content, date, updatedtime,deleteComment,sh
         setEditing(false);
     }
 
-
     const items = [
-        {
-            key: '1',
-            icon: <Button icon={<EditOutlined/>} onClick={(e)=>{e.stopPropagation();edit()}}/>
-        },
         {
             key: '2',
             icon: <Button icon={<HistoryOutlined/>} onClick={(e)=>{e.stopPropagation();showHistory()}}></Button>
-        },
-        {
+        }
+    ]
+    if (currentUid === uid){
+        items.push({
+            key: '1',
+            icon: <Button icon={<EditOutlined/>} onClick={(e)=>{e.stopPropagation();edit()}}/>
+        })
+        items.push({
             key: '3',
             icon: <Button icon={<DeleteOutlined/>} onClick={(e)=>{e.stopPropagation();showDeleteConfirm()}}></Button>
-        },
-    ];
+        })
+    }
 
     return (
         <div className="comment">
