@@ -13,6 +13,7 @@ AWS.config.update({
     }),
 })
 
+// Uploads a file to an S3 bucket
 export const s3Upload = async file => {
     const filename = uuidv4()
     const fileExt = file.name.split('.').pop()
